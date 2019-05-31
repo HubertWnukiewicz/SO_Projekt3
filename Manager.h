@@ -6,6 +6,7 @@
 #include <atomic>
 #include <functional>
 #include <condition_variable>
+#include "WorkStation.h"
 class Manager
 {
 	
@@ -21,7 +22,13 @@ public:
 private:
 	WorkStation& myWorkStation;
 	int id;
-	std::thread thread;
+	//std::thread thread;
 	std::chrono::milliseconds activityTime;
-	ManagerState nextState;
+	ManagerState state;
+
+public:
+
+	Manager(int id, WorkStation& workStation);
+
+	void changeWorkStation(WorkStation& myWorkStation);
 };

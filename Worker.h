@@ -18,9 +18,11 @@ public:
 		activity4,
 		activity5
 	};
+
+	Worker(int id);
 private:
 	int id;
-	std::thread thread;
+	//std::thread thread;
 	std::chrono::milliseconds activityTime;
 	WorkerState nextState;
 

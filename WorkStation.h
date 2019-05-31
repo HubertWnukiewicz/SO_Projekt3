@@ -12,5 +12,7 @@ public:
 	WorkStation();
 
 	WorkStation(int id, std::string name, Manager* manager);
+
+
 	
 };

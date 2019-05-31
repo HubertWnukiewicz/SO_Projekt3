@@ -9,8 +9,8 @@ int main()
     const int NUM_OF_OLD_VIEWERS = 22;
     const int NUM_OF_YOUNG_VIEWERS = 20;
 
-    //Window window = Window();
-   // window.drawScene();
+    Window window = Window(); //std::vector<ScreeingRoom> screeningRooms
+    window.drawScene();
 
     while(getch()!='k');
     return 0;

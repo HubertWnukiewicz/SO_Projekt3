@@ -12,11 +12,15 @@
 class Window
 {
     public:
-        Window(std::vector<ScreeingRoom>);
+        Window();
 
         void drawScene();
         void createOldViewerWindow(const int oldViewer,const int youngViewer);
         void createScreeningRoom(WINDOW *win, int width);
+        void createToilet(WINDOW *win);
+        void createTicketOfficeStation(WINDOW *win,std::string stationName);
+        void createWaitingRoom(WINDOW *win);
+        void createLegend();
 
         virtual ~Window();
     protected:

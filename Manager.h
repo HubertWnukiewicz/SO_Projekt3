@@ -6,7 +6,9 @@
 #include <atomic>
 #include <functional>
 #include <condition_variable>
-#include "WorkStation.h"
+
+class WorkStation;
+
 class Manager
 {
 	
@@ -20,7 +22,9 @@ public:
 		activity5
 	};
 private:
-	WorkStation& myWorkStation;
+
+	WorkStation* myWorkStation;
+
 	int id;
 	//std::thread thread;
 	std::chrono::milliseconds activityTime;
@@ -28,7 +32,9 @@ private:
 
 public:
 
-	Manager(int id, WorkStation& workStation);
+	Manager(int id, WorkStation* workStation);
+
+
 
 	void changeWorkStation(WorkStation& myWorkStation);
 };

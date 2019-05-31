@@ -6,6 +6,7 @@ ScreeingRoom::ScreeingRoom(int id, int numberOfSeats, Movie movie)
 	this->numberOfSeats = numberOfSeats;
 	this->movie = movie;
 	this->currentNumberOfViewers = 0;
+
 }
 
 void ScreeingRoom::startMovie()

@@ -1,7 +1,10 @@
 #pragma once
 #include "WorkStation.h"
 #include "Worker.h"
-#include "Viewer.h"
+#include "Boss.h"
+
+class Viewer;
+//Viewer*  a;
 
 class FoodStation : WorkStation
 {
@@ -12,9 +15,11 @@ public:
 		FREE
 	};
 
-	void sellFood(Viewer viewer);
+	void startFood(Viewer* viewer);
 
-	FoodStation(Manager* manager, Worker* worker);
+	void stopFood(Viewer* viewer);
+
+	FoodStation(int manager_id, int worker1_id, int worker2_id,Boss& boss);
 
 	Manager* getManager() { return this->manager; }
 
@@ -22,4 +27,10 @@ public:
 private:
 	Manager* manager;
 	Worker* worker;
+	std::mutex foodMutex;
+
+	int manager_id;
+	int worker1_id;
+	int worker2_id;
+	Boss& boss;
 };

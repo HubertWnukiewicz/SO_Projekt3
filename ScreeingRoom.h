@@ -1,5 +1,9 @@
 #pragma once
 #include "Movie.h"
+#include <vector>
+class Movie;
+class Viewer;
+
 class ScreeingRoom
 {
 	enum ScreeingRoomState {
@@ -13,8 +17,12 @@ class ScreeingRoom
 	int currentNumberOfViewers;
 	int numberOfSeats;
 	Movie movie;
+	std::vector<class Viewer*> viewers;
 	ScreeingRoomState state;
 	//Boss& boss
+	int manager_id;
+	int worker_id1;
+	int worker_id2;
 
 public:
 

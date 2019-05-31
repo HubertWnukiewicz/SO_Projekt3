@@ -1,7 +1,10 @@
 #include "Viewer.h"
-
-
-Viewer::Viewer(int id, bool isAdult, bool wantFood, bool wantSoda, bool wantToUseToilet, Movie movieToWatch)
+#include "FoodStation.h"
+#include "SodaStation.h"
+#include "Toilet.h"
+#include <thread>
+using namespace std;
+Viewer::Viewer(int id, bool isAdult, bool wantFood, bool wantSoda, bool wantToUseToilet, Movie movieToWatch, TicketBooth* ticketBooth, Toilet* toilet, FoodStation* foodStation, SodaStation* sodaStation) :foodStation(foodStation)
 {
 	this->id = id;
 	this->isAdult=isAdult;
@@ -11,6 +14,11 @@ Viewer::Viewer(int id, bool isAdult, bool wantFood, bool wantSoda, bool wantToUs
 	this->movieToWatch = movieToWatch;
 	this->haveTicket = false;
 	this->readyToWatch = false;
+	
+	this->ticketBooth = ticketBooth;
+	this->toilet = toilet;
+	this->foodStation = foodStation;
+	this->sodaStation = sodaStation;
 }
 
 void Viewer::cycleOfiLife()
@@ -18,17 +26,23 @@ void Viewer::cycleOfiLife()
 	if (this->wantFood == true)
 	{
 		this->state = ViewerState::WAITING_FOR_FOOD;
-		//ustaw sie do kolejki z jedzeniem
+		foodStation->startFood(this);
+		this_thread::sleep_for(20ms);
+		foodStation->stopFood(this);
 	}
 	if (this->wantSoda == true)
 	{
 		this->state = ViewerState::WAITING_FOR_SODA;
-		//ustaw sie do kolejki z soda
+		sodaStation->startSoda(this);
+		this_thread::sleep_for(20ms);
+		sodaStation->stopSoda(this);
 	}
 	if (this->wantToUseToilet == true)
 	{
 		this->state = ViewerState::WAITING_FOR_TOILET;
-		//ustaw sie do kolejki do toalety
+		toilet->startToilet(this);
+		this_thread::sleep_for(20ms);
+		toilet->stopToilet(this);
 	}
 	if (this->haveTicket == false)
 	{

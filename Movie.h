@@ -8,7 +8,10 @@ class Movie {
 
 public:
 
+
 	Movie();
+
+
 	Movie(int id, std::string name, bool isForKids);
 
 	int getId() { return this->id; }

@@ -4,6 +4,7 @@ void FoodStation::sellFood(Viewer viewer)
 	//if (manager != nullptr && worker != nullptr)
 	//zawolanie obiektu klasy Boss jesli nie ma managera o jego przybycie i wydanie sody
 
+
 	if (viewer.getWantSoda() == true)
 	{
 		//TODO lock zmiennej warunkowej

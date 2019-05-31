@@ -1,5 +1,9 @@
 #pragma once
 #include "Movie.h"
+
+class Movie;
+
+
 class ScreeingRoom
 {
 	enum ScreeingRoomState {

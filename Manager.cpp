@@ -1,6 +1,7 @@
 #include "Manager.h"
 
-Manager::Manager(int id, WorkStation & workStation)
+
+Manager::Manager(int id, WorkStation * workStation)
 {
 	this->id = id;
 	this->myWorkStation = workStation;

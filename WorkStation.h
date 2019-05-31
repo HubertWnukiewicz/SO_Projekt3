@@ -2,6 +2,9 @@
 #include <iostream>
 #include "Manager.h"
 
+class Manager;
+
+
 class WorkStation
 {
 	int id;

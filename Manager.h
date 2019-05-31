@@ -6,11 +6,14 @@
 #include <atomic>
 #include <functional>
 #include <condition_variable>
+#include "WorkStation.h"
+class WorkStation;
 
-class Worker
+class Manager
 {
+	
 public:
-	enum WorkerState
+	enum ManagerState
 	{
 		activity1,
 		activity2,
@@ -18,13 +21,16 @@ public:
 		activity4,
 		activity5
 	};
-
-	Worker(int id);
 private:
+	WorkStation* myWorkStation;
 	int id;
 	//std::thread thread;
 	std::chrono::milliseconds activityTime;
-	WorkerState nextState;
+	ManagerState state;
 
+public:
 
+	Manager(int id, WorkStation* workStation);
+
+	void changeWorkStation(WorkStation& myWorkStation);
 };

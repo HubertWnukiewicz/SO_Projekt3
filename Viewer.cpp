@@ -32,7 +32,7 @@ void Viewer::cycleOfiLife()
 	//while (true) {
 		if (this->wantFood == true)
 		{
-			cout << "ID: " << this->id << "->WAITING_FOR_FOOD" << endl;
+			//cout << "ID: " << this->id << "->WAITING_FOR_FOOD" << endl;
 			this->state = ViewerState::WAITING_FOR_FOOD;
 			foodStation->startFood(this);
 			this_thread::sleep_for(1000ms);
@@ -40,7 +40,7 @@ void Viewer::cycleOfiLife()
 		}
 		if (this->wantSoda == true)
 		{
-			cout << "ID: " << this->id << "->WAITING_FOR_SODA" << endl;
+			//cout << "ID: " << this->id << "->WAITING_FOR_SODA" << endl;
 			this->state = ViewerState::WAITING_FOR_SODA;
 			sodaStation->startSoda(this);
 			this_thread::sleep_for(1000ms);
@@ -48,7 +48,7 @@ void Viewer::cycleOfiLife()
 		}
 		if (this->wantToUseToilet == true)
 		{
-			cout << "ID: " << this->id << "->WAITING_FOR_TOILET" << endl;
+			//cout << "ID: " << this->id << "->WAITING_FOR_TOILET" << endl;
 			this->state = ViewerState::WAITING_FOR_TOILET;
 			toilet->startToilet(this);
 			this_thread::sleep_for(1000ms);
@@ -56,7 +56,7 @@ void Viewer::cycleOfiLife()
 		}
 		if (this->haveTicket == false)
 		{
-			cout << "ID: " << this->id << "->WAITING_FOR_TICKET" << endl;
+			//cout << "ID: " << this->id << "->WAITING_FOR_TICKET" << endl;
 			this->state = ViewerState::WAITING_FOR_TICKET;
 			ticketBooth->startTicket(this);
 			this_thread::sleep_for(1000ms);
@@ -64,7 +64,7 @@ void Viewer::cycleOfiLife()
 		}
 		if (this->haveTicket == true && this->wantToUseToilet == false && this->wantSoda == false && this->wantFood == false)
 		{
-			cout << "ID: " << this->id << "->WAITING_FOR_MOVIE" << endl;
+			//cout << "ID: " << this->id << "->WAITING_FOR_MOVIE" << endl;
 			this->readyToWatch = true;
 			this->state = ViewerState::WAITING_FOR_MOVIE;
 

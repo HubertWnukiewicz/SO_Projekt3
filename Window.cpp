@@ -1,11 +1,24 @@
 #include "Window.h"
 
-Window::Window(std::list<Viewer> _viewerList)
+Window::Window()
 {
+   
     //this->viewerList=_viewerList;
     //SALA 1 -DOROSLI
     //SALA 2 -WSZYSCY
     //SALA 3 -WSZYSCY
+
+    Boss boss;
+	//vector<thread> philosopherThreads;
+	TicketBooth* ticketBooth=new TicketBooth(0,1,2,boss);
+	Toilet* toilet=new Toilet(10);
+	FoodStation* foodStation=new FoodStation(0, 1, 2, boss);
+	SodaStation* sodaStation=new SodaStation(0, 1, 2, boss);
+	Movie movie(1, "aaa", true);
+	for (int i = 0; i < 2; i++)
+	{
+		viewerList->emplace_back(i, false, true, true, true, movie, ticketBooth, toilet, foodStation, sodaStation);
+	}
 
     initscr();
     start_color();  
@@ -16,15 +29,29 @@ Window::Window(std::list<Viewer> _viewerList)
     init_pair(4, COLOR_WHITE, COLOR_BLUE); //pracownicy
     init_pair(5, COLOR_RED, COLOR_YELLOW); //kierownicy
 
-    this->screenThread=std::thread(&Window::redrawScene,this);
+     for(Viewer el:*viewerList)
+    {
+        printw("%d\n",el.getId());
+    }
+}
+
+void Window::start()
+{
+    for (auto &viewer : *viewerList)
+	{
+		viewer.viewerThread.join();
+	}
+    this->screenThread=std::thread(&Window::drawScene,this);
 }
 
 void Window::drawScene(){
-    //while(true)
-    //{
+    while(true)
+    {
         redrawScene();
-    //    usleep(350000);
-    //}
+        usleep(350000);
+        //std::this_thread::sleep_for(1000ms);
+        //clear();
+    }
 }
 
 void Window::redrawScene()
@@ -158,6 +185,7 @@ void Window::createTicketOfficeStation(WINDOW *win,std::string stationName)
 }
 
 void Window::createWaitingRoom(WINDOW *win){
+
     box(win, 0, 0);
     mvwhline(win,2,1,0,win->_maxx-1);
     mvwhline(win,8,1,0,win->_maxx-1);
@@ -169,6 +197,21 @@ void Window::createWaitingRoom(WINDOW *win){
     wattron(win,COLOR_PAIR(1));
     wprintw(win,"Poczekalnia");
     wattroff(win,COLOR_PAIR(1));
+
+    int i=0;
+   // for(Viewer el : viewerList)
+   // {
+       // if(el.getState()==Viewer::ViewerState::WAITING_FOR_MOVIE)
+       // {
+           //if(el.getId()>=0){
+           // wmove(win,3+i,2);
+           // wattron(win,COLOR_PAIR(2));
+           // wprintw(win,"%d",el.getId());
+           // wattroff(win,COLOR_PAIR(2));//}
+        //}
+     //   i++;
+   // }
+
     refresh();
 }
 

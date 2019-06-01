@@ -16,6 +16,7 @@ class Window
 
         void drawScene();
         void createOldViewerWindow(const int oldViewer,const int youngViewer);
+
         void createScreeningRoom(WINDOW *win, int width);
 
         virtual ~Window();

@@ -10,4 +10,8 @@ class Boss
 	std::condition_variable cv;
 public:
 	Boss(std::deque<class Worker *> workers, std::deque<class Manager *> managers);
+
+	Boss();
+
+	void callForManager(int id);
 };

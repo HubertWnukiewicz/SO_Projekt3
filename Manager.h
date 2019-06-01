@@ -6,7 +6,10 @@
 #include <atomic>
 #include <functional>
 #include <condition_variable>
-#include "WorkStation.h"
+
+
+class WorkStation;
+
 
 class Manager
 {

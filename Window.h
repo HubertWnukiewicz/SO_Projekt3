@@ -32,8 +32,7 @@ class Window
         void drawScene();
         void redrawScene();
         void createOldViewerWindow(const int oldViewer,const int youngViewer);
-
-        void createScreeningRoom(WINDOW *win, int width);
+        void createScreeningRoom(WINDOW *win);
         void createToilet(WINDOW *win);
         void createTicketOfficeStation(WINDOW *win,std::string stationName);
         void createWaitingRoom(WINDOW *win);
@@ -44,7 +43,7 @@ class Window
         std::thread screenThread;
     protected:
     private:
-        std::list<Viewer> *viewerList;
+        std::list<Viewer*> viewerList;
 };
 
 #endif // WINDOW_H

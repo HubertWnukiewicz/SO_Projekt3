@@ -67,8 +67,8 @@ void Viewer::cycleOfiLife()
 			//cout << "ID: " << this->id << "->WAITING_FOR_MOVIE" << endl;
 			this->readyToWatch = true;
 			this->state = ViewerState::WAITING_FOR_MOVIE;
-
 		}
 	//}
-	//ustalenie state na leaving cinema albo po utowrzeniu zmiennej bool dla viewera i zmiana jej w klasie sali kinowej lub ustawienie state w klasie kinowej bez tworzenia zminnej u widza 
+	//ustalenie state na leaving cinema albo po utowrzeniu zmiennej bool dla viewera i zmiana 
+	//jej w klasie sali kinowej lub ustawienie state w klasie kinowej bez tworzenia zminnej u widza 
 }

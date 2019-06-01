@@ -15,9 +15,9 @@ Window::Window()
 	FoodStation* foodStation=new FoodStation(0, 1, 2, boss);
 	SodaStation* sodaStation=new SodaStation(0, 1, 2, boss);
 	Movie movie(1, "aaa", true);
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 40; i++)
 	{
-		viewerList->emplace_back(i, false, true, true, true, movie, ticketBooth, toilet, foodStation, sodaStation);
+		viewerList.push_back(new Viewer(i, false, true, true, true, movie, ticketBooth, toilet, foodStation, sodaStation));
 	}
 
     initscr();
@@ -29,19 +29,20 @@ Window::Window()
     init_pair(4, COLOR_WHITE, COLOR_BLUE); //pracownicy
     init_pair(5, COLOR_RED, COLOR_YELLOW); //kierownicy
 
-     for(Viewer el:*viewerList)
+     for(Viewer *el:viewerList)
     {
-        printw("%d\n",el.getId());
+    //    printw("%d\n",el->getId());
     }
 }
 
 void Window::start()
 {
-    for (auto &viewer : *viewerList)
-	{
-		viewer.viewerThread.join();
-	}
     this->screenThread=std::thread(&Window::drawScene,this);
+    for (auto *viewer : viewerList)
+	{
+		viewer->viewerThread.join();
+	}
+    this->screenThread.join();
 }
 
 void Window::drawScene(){
@@ -74,9 +75,9 @@ void Window::redrawScene()
 //                                                                                                            
 //                                                                                                           
 /////////////////CREATING WINDOWS STRUCTURE////////////////////////                                           
-    createScreeningRoom(screeningRoomForOldViewers, 40);                    
-    createScreeningRoom(screeningRoomForYoungViewers, 40);                  
-    createScreeningRoom(screeningRoomForEveryoneViewers, 40);
+    createScreeningRoom(screeningRoomForOldViewers);                    
+    createScreeningRoom(screeningRoomForYoungViewers);                  
+    createScreeningRoom(screeningRoomForEveryoneViewers);
     createToilet(toiletWindow);
     createTicketOfficeStation(popcornStation,"Popcorn");
     createTicketOfficeStation(sodaStation,"Napoje");
@@ -124,7 +125,7 @@ void Window::createOldViewerWindow(const int oldViewer,const int youngViewer)
     wrefresh(win);
 }
 
-void Window::createScreeningRoom(WINDOW *win, int width)
+void Window::createScreeningRoom(WINDOW *win)
 {
     std::string a = "Cygan w wielkim miescie";
     const char * filmeName=a.c_str();
@@ -138,24 +139,27 @@ void Window::createScreeningRoom(WINDOW *win, int width)
     wattroff(win,COLOR_PAIR(1));
 
     for(int i=0; i<4; i++){
-        mvwhline(win,2+2*i,1,0,width-2);
+        mvwhline(win,2+2*i,1,0,win->_maxx-1);
     }
 
     int row=0;
     int col=0;
-    for(int i=0; i<35; i++)
-    {
+     for(Viewer *el : viewerList)
+   {
+      if(el->getState()==6)
+      {
         wmove(win,3+row,2+col*3);
         wattron(win,COLOR_PAIR(2));
-        wprintw(win,"%d",i);
+        wprintw(win,"%d",el->getId());
         wattroff(win,COLOR_PAIR(2));
         col++;
 
-        if((2+col*3)>width-3){
+        if((2+col*3)>win->_maxx-2){
             row= row + 2;
             col=0;
         }
-    }
+     }
+   }
 }
 
 void Window::createToilet(WINDOW *win){
@@ -168,6 +172,20 @@ void Window::createToilet(WINDOW *win){
 
     for(int i=1; i<=3; i++)
         mvwvline(win,3,4*i,0,1);
+
+    int col=0;
+    for(Viewer *el : viewerList)
+    {
+       if(el->getState()==3)
+        {
+           wmove(win,3,2+col*3);
+           wattron(win,COLOR_PAIR(2));
+           wprintw(win,"%d",el->getId());
+           wattroff(win,COLOR_PAIR(2));//}
+           col++;
+        }
+    }
+
     refresh();
 }
 
@@ -198,20 +216,24 @@ void Window::createWaitingRoom(WINDOW *win){
     wprintw(win,"Poczekalnia");
     wattroff(win,COLOR_PAIR(1));
 
-    int i=0;
-   // for(Viewer el : viewerList)
-   // {
-       // if(el.getState()==Viewer::ViewerState::WAITING_FOR_MOVIE)
-       // {
-           //if(el.getId()>=0){
-           // wmove(win,3+i,2);
-           // wattron(win,COLOR_PAIR(2));
-           // wprintw(win,"%d",el.getId());
-           // wattroff(win,COLOR_PAIR(2));//}
-        //}
-     //   i++;
-   // }
+    int row=0;
+    int col=0;
+   for(Viewer *el : viewerList)
+   {
+      if(el->getState()==0)
+      {
+           wmove(win,3+row,2+col*3);
+           wattron(win,COLOR_PAIR(2));
+           wprintw(win,"%d",el->getId());
+           wattroff(win,COLOR_PAIR(2));//}
+           col++;
 
+            if((2+col*3)>win->_maxx-2){
+            row= row + 2;
+            col=0;
+            }
+        }
+   }
     refresh();
 }
 

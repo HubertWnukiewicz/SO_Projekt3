@@ -2,7 +2,7 @@
 #define WINDOW_H
 
 #include<iostream>
-//#include <ncurses.h>
+#include <ncurses.h>
 #include <string.h>
 #include <stdio.h>
 #include <vector>
@@ -16,7 +16,8 @@ class Window
 
         void drawScene();
         void createOldViewerWindow(const int oldViewer,const int youngViewer);
-        //void createScreeningRoom(WINDOW *win, int width);
+
+        void createScreeningRoom(WINDOW *win, int width);
 
         virtual ~Window();
     protected:

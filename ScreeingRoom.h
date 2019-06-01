@@ -1,8 +1,10 @@
 #pragma once
 #include "Movie.h"
+
 #include <vector>
 class Movie;
 class Viewer;
+
 
 class ScreeingRoom
 {

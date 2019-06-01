@@ -9,6 +9,7 @@ void FoodStation::startFood(Viewer* viewer)
 	//zawolanie obiektu klasy Boss jesli nie ma managera o jego przybycie i wydanie sody
 
 
+
 	//TO MUSI ZOSTAC
 	/*
 	if (manager == nullptr)
@@ -26,6 +27,7 @@ void FoodStation::stopFood(Viewer* viewer)
 	viewer->setWantFood(false);
 	this->foodMutex.unlock();
 	std::cout << "4. FoodStation" << std::endl;
+
 }
 
 FoodStation::FoodStation(int manager_id, int worker_id, int worker2_id,Boss& boss) :boss(boss)

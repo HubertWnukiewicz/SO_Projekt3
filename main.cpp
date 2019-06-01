@@ -1,6 +1,7 @@
 #include <iostream>
 #include"stdio.h"
 #include"Window.h"
+
 #include "Viewer.h"
 #include "Boss.h"
 #include "TicketBooth.h"
@@ -10,6 +11,7 @@
 #include <list>
 using namespace std;
 class TicketBooth;
+
 int main()
 {
     const int NUM_OF_OLD_VIEWERS = 22;
@@ -37,5 +39,6 @@ int main()
 	//TicketBooth* ticketBooth, Toilet* toilet, FoodStation* foodStation, SodaStation* sodaStation);
     //while(getch()!='k');
 	cin.ignore(2);
+
     return 0;
 }

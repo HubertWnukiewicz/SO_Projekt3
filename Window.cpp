@@ -1,8 +1,8 @@
 #include "Window.h"
 
-Window::Window()
+Window::Window(std::list<Viewer> _viewerList)
 {
-    this->screeningRooms=screeningRooms;
+    //this->viewerList=_viewerList;
     //SALA 1 -DOROSLI
     //SALA 2 -WSZYSCY
     //SALA 3 -WSZYSCY
@@ -15,9 +15,19 @@ Window::Window()
     init_pair(3, COLOR_RED, COLOR_GREEN);  //mlodzi widzowie  RED, GREEN
     init_pair(4, COLOR_WHITE, COLOR_BLUE); //pracownicy
     init_pair(5, COLOR_RED, COLOR_YELLOW); //kierownicy
+
+    this->screenThread=std::thread(&Window::redrawScene,this);
 }
 
-void Window::drawScene()
+void Window::drawScene(){
+    //while(true)
+    //{
+        redrawScene();
+    //    usleep(350000);
+    //}
+}
+
+void Window::redrawScene()
 {
     const int TICKETOFFICE_STATION_NUMBER=4;
 

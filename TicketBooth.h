@@ -2,35 +2,37 @@
 #include "WorkStation.h"
 #include "Worker.h"
 #include "Boss.h"
+#include <vector>
 
 class Viewer;
-//Viewer*  a;
-
-class FoodStation : WorkStation
+class TicketBooth : WorkStation
 {
 public:
-	enum FoodStationState
+	enum TicketBoothState
 	{
 		IN_USE,
 		FREE
 	};
 
-	void startFood(Viewer* viewer);
+	void startTicket(Viewer* viewer);
 
-	void stopFood(Viewer* viewer);
+	void stopTicket(Viewer* viewer);
 
-	FoodStation(int manager_id, int worker1_id, int worker2_id,Boss& boss);
+	TicketBooth(int manager_id, int worker1_id, int worker2_id, Boss& boss);
 
 	Manager* getManager() { return this->manager; }
 
 	Worker* getWorker() { return this->worker; }
+
 private:
+	int maxPeopleInQueue;
+	std::vector<class Viewer*> viewersInQueue;
 	Manager* manager;
 	Worker* worker;
-	std::mutex foodMutex;
+	std::mutex boothMutex;
+	Boss& boss;
 
 	int manager_id;
 	int worker1_id;
 	int worker2_id;
-	Boss& boss;
 };

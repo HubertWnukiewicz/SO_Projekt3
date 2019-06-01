@@ -5,8 +5,13 @@
 #include <cstdio>
 #include <atomic>
 #include <functional>
-#include <condition_variable>
 #include "Movie.h"
+//#include "TicketBooth.h"
+
+class TicketBooth;
+class Toilet;
+class FoodStation;
+class SodaStation;
 
 class Viewer
 {
@@ -22,6 +27,7 @@ public:
 		WATCHING_MOVIE,
 		LEAVING_CINEMA
 	};
+	Viewer(const Viewer &);
 
 	int getId() { return this->id; }
 
@@ -33,32 +39,49 @@ public:
 
 	bool getWantFood() { return this->wantFood; }
 
-	bool setWantFood(bool wantFood) { this->wantFood=wantFood; }
+	void setWantFood(bool wantFood) { this->wantFood=wantFood; }
 
 	bool getWantSoda() { return this->wantSoda; }
 
-	bool setWantSoda(bool wantSoda) { this->wantSoda = wantSoda; }
+	void setWantSoda(bool wantSoda) { this->wantSoda = wantSoda; }
+
+	bool getHaveTicket() { return this->haveTicket; }
+
+	void setHaveTicket(bool haveTicket) { this->haveTicket = haveTicket; }
+
+	bool getWantToUseToilet() { return this->wantToUseToilet; }
+
+	void setWantToUseToilet(bool wantToUseToilet) { this->wantToUseToilet = wantToUseToilet; }
 
 	Movie getMovieToWatch() { return this->movieToWatch; }
 
 	void setMovieToWatch(Movie movieToWatch) {this->movieToWatch=movieToWatch; }
 
-	Viewer(int id, bool isAdult, bool wantFood, bool wantSoda, bool wantToUseToilet, Movie movieToWatch);
+	Viewer(int id, bool isAdult, bool wantFood, bool wantSoda, bool wantToUseToilet, Movie movieToWatch,
+		TicketBooth* ticketBooth, Toilet* toilet, FoodStation* foodStation, SodaStation* sodaStation);
 
 	void cycleOfiLife();
 
-	
+	std::thread viewerThread;
 private:
 
 	int id;
+
 	bool isAdult;
 	bool wantFood;
 	bool wantSoda;
 	bool wantToUseToilet;
 	bool haveTicket;
 	bool readyToWatch;
+
 	Movie movieToWatch;
 	std::chrono::milliseconds activityTime;
 	ViewerState state;
 
+	TicketBooth* ticketBooth;
+	Toilet* toilet;
+	FoodStation* foodStation;
+	SodaStation* sodaStation;
+
+	
 };

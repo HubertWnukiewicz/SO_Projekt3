@@ -5,3 +5,12 @@ Boss::Boss(std::deque<class Worker *> workers, std::deque<class Manager *> manag
 	this->workers = workers;
 	this->managers = managers;
 }
+
+Boss::Boss()
+{
+
+}
+
+void Boss::callForManager(int id)
+{
+}

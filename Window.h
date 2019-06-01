@@ -32,6 +32,7 @@ class Window
         void drawScene();
         void redrawScene();
         void createOldViewerWindow(const int oldViewer,const int youngViewer);
+
         void createScreeningRoom(WINDOW *win, int width);
         void createToilet(WINDOW *win);
         void createTicketOfficeStation(WINDOW *win,std::string stationName);

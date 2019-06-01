@@ -4,6 +4,7 @@
 class Movie;
 class Viewer;
 
+
 class ScreeingRoom
 {
 	enum ScreeingRoomState {

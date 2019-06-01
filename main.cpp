@@ -1,7 +1,6 @@
 #include <iostream>
 #include"stdio.h"
 #include"Window.h"
-
 #include "Viewer.h"
 #include "Boss.h"
 #include "TicketBooth.h"
@@ -28,10 +27,16 @@ int main()
 	{
 		viewers.emplace_back(i, false, true, true, true, movie, ticketBooth, toilet, foodStation, sodaStation);
 	}
+
+	Window *window = new Window(viewers);
+
 	for (auto &viewer : viewers)
 	{
 		viewer.viewerThread.join();
 	}
+
+	window->screenThread.join();
+
 	cout << "Ilosc elementow: " << viewers.size() << endl;
     //Window window = Window();
    // window.drawScene();

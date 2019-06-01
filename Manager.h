@@ -7,9 +7,7 @@
 #include <functional>
 #include <condition_variable>
 
-
 class WorkStation;
-
 
 class Manager
 {

@@ -10,6 +10,7 @@
 #include <list>
 using namespace std;
 class TicketBooth;
+
 int main()
 {
     const int NUM_OF_OLD_VIEWERS = 22;
@@ -26,12 +27,16 @@ int main()
 	{
 		viewers.emplace_back(i, false, true, true, true, movie, ticketBooth, toilet, foodStation, sodaStation);
 	}
+
 	Window *window = new Window(viewers);
+
 	for (auto &viewer : viewers)
 	{
 		viewer.viewerThread.join();
 	}
+
 	window->screenThread.join();
+
 	cout << "Ilosc elementow: " << viewers.size() << endl;
     //Window window = Window();
    // window.drawScene();
@@ -39,5 +44,6 @@ int main()
 	//TicketBooth* ticketBooth, Toilet* toilet, FoodStation* foodStation, SodaStation* sodaStation);
     //while(getch()!='k');
 	cin.ignore(2);
+
     return 0;
 }

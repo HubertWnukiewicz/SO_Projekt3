@@ -1,11 +1,24 @@
 #include "Window.h"
 
-Window::Window(std::list<Viewer> _viewerList)
+Window::Window()
 {
+   
     //this->viewerList=_viewerList;
     //SALA 1 -DOROSLI
     //SALA 2 -WSZYSCY
     //SALA 3 -WSZYSCY
+
+    Boss boss;
+	//vector<thread> philosopherThreads;
+	TicketBooth* ticketBooth=new TicketBooth(0,1,2,boss);
+	Toilet* toilet=new Toilet(10);
+	FoodStation* foodStation=new FoodStation(0, 1, 2, boss);
+	SodaStation* sodaStation=new SodaStation(0, 1, 2, boss);
+	Movie movie(1, "aaa", true);
+	for (int i = 0; i < 40; i++)
+	{
+		viewerList.push_back(new Viewer(i, false, true, true, true, movie, ticketBooth, toilet, foodStation, sodaStation));
+	}
 
     initscr();
     start_color();  
@@ -16,15 +29,30 @@ Window::Window(std::list<Viewer> _viewerList)
     init_pair(4, COLOR_WHITE, COLOR_BLUE); //pracownicy
     init_pair(5, COLOR_RED, COLOR_YELLOW); //kierownicy
 
-    this->screenThread=std::thread(&Window::redrawScene,this);
+     for(Viewer *el:viewerList)
+    {
+    //    printw("%d\n",el->getId());
+    }
+}
+
+void Window::start()
+{
+    this->screenThread=std::thread(&Window::drawScene,this);
+    for (auto *viewer : viewerList)
+	{
+		viewer->viewerThread.join();
+	}
+    this->screenThread.join();
 }
 
 void Window::drawScene(){
-    //while(true)
-    //{
+    while(true)
+    {
         redrawScene();
-    //    usleep(350000);
-    //}
+        usleep(350000);
+        //std::this_thread::sleep_for(1000ms);
+        //clear();
+    }
 }
 
 void Window::redrawScene()
@@ -47,9 +75,9 @@ void Window::redrawScene()
 //                                                                                                            
 //                                                                                                           
 /////////////////CREATING WINDOWS STRUCTURE////////////////////////                                           
-    createScreeningRoom(screeningRoomForOldViewers, 40);                    
-    createScreeningRoom(screeningRoomForYoungViewers, 40);                  
-    createScreeningRoom(screeningRoomForEveryoneViewers, 40);
+    createScreeningRoom(screeningRoomForOldViewers);                    
+    createScreeningRoom(screeningRoomForYoungViewers);                  
+    createScreeningRoom(screeningRoomForEveryoneViewers);
     createToilet(toiletWindow);
     createTicketOfficeStation(popcornStation,"Popcorn");
     createTicketOfficeStation(sodaStation,"Napoje");
@@ -97,7 +125,7 @@ void Window::createOldViewerWindow(const int oldViewer,const int youngViewer)
     wrefresh(win);
 }
 
-void Window::createScreeningRoom(WINDOW *win, int width)
+void Window::createScreeningRoom(WINDOW *win)
 {
     std::string a = "Cygan w wielkim miescie";
     const char * filmeName=a.c_str();
@@ -111,24 +139,27 @@ void Window::createScreeningRoom(WINDOW *win, int width)
     wattroff(win,COLOR_PAIR(1));
 
     for(int i=0; i<4; i++){
-        mvwhline(win,2+2*i,1,0,width-2);
+        mvwhline(win,2+2*i,1,0,win->_maxx-1);
     }
 
     int row=0;
     int col=0;
-    for(int i=0; i<35; i++)
-    {
+     for(Viewer *el : viewerList)
+   {
+      if(el->getState()==6)
+      {
         wmove(win,3+row,2+col*3);
         wattron(win,COLOR_PAIR(2));
-        wprintw(win,"%d",i);
+        wprintw(win,"%d",el->getId());
         wattroff(win,COLOR_PAIR(2));
         col++;
 
-        if((2+col*3)>width-3){
+        if((2+col*3)>win->_maxx-2){
             row= row + 2;
             col=0;
         }
-    }
+     }
+   }
 }
 
 void Window::createToilet(WINDOW *win){
@@ -141,6 +172,20 @@ void Window::createToilet(WINDOW *win){
 
     for(int i=1; i<=3; i++)
         mvwvline(win,3,4*i,0,1);
+
+    int col=0;
+    for(Viewer *el : viewerList)
+    {
+       if(el->getState()==3)
+        {
+           wmove(win,3,2+col*3);
+           wattron(win,COLOR_PAIR(2));
+           wprintw(win,"%d",el->getId());
+           wattroff(win,COLOR_PAIR(2));//}
+           col++;
+        }
+    }
+
     refresh();
 }
 
@@ -158,6 +203,7 @@ void Window::createTicketOfficeStation(WINDOW *win,std::string stationName)
 }
 
 void Window::createWaitingRoom(WINDOW *win){
+
     box(win, 0, 0);
     mvwhline(win,2,1,0,win->_maxx-1);
     mvwhline(win,8,1,0,win->_maxx-1);
@@ -169,6 +215,25 @@ void Window::createWaitingRoom(WINDOW *win){
     wattron(win,COLOR_PAIR(1));
     wprintw(win,"Poczekalnia");
     wattroff(win,COLOR_PAIR(1));
+
+    int row=0;
+    int col=0;
+   for(Viewer *el : viewerList)
+   {
+      if(el->getState()==0)
+      {
+           wmove(win,3+row,2+col*3);
+           wattron(win,COLOR_PAIR(2));
+           wprintw(win,"%d",el->getId());
+           wattroff(win,COLOR_PAIR(2));//}
+           col++;
+
+            if((2+col*3)>win->_maxx-2){
+            row= row + 2;
+            col=0;
+            }
+        }
+   }
     refresh();
 }
 

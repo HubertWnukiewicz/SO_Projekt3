@@ -53,6 +53,8 @@ public:
 
 	void setWantToUseToilet(bool wantToUseToilet) { this->wantToUseToilet = wantToUseToilet; }
 
+	ViewerState getState(){return this ->state;}
+
 	Movie getMovieToWatch() { return this->movieToWatch; }
 
 	void setMovieToWatch(Movie movieToWatch) {this->movieToWatch=movieToWatch; }

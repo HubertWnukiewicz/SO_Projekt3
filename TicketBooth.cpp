@@ -2,9 +2,9 @@
 #include "Viewer.h"
 void TicketBooth::startTicket(Viewer* viewer)
 {
-	std::cout << "1. TicketBooth" << std::endl;
+	//std::cout << "1. TicketBooth" << std::endl;
 	this->boothMutex.lock();
-	std::cout << "2. TicketBooth" << std::endl;
+	//std::cout << "2. TicketBooth" << std::endl;
 	//TO MUSI ZOSTAC
 	/*
 	if (manager == nullptr)
@@ -17,10 +17,10 @@ void TicketBooth::startTicket(Viewer* viewer)
 }
 void TicketBooth::stopTicket(Viewer* viewer)
 {
-	std::cout << "3. TicketBooth" << std::endl;
+//	std::cout << "3. TicketBooth" << std::endl;
 	viewer->setHaveTicket(true);
 	this->boothMutex.unlock();
-	std::cout << "4. TicketBooth" << std::endl;
+//	std::cout << "4. TicketBooth" << std::endl;
 
 }
 

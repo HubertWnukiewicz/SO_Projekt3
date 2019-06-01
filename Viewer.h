@@ -27,6 +27,7 @@ public:
 		WATCHING_MOVIE,
 		LEAVING_CINEMA
 	};
+	Viewer(const Viewer &);
 
 	int getId() { return this->id; }
 
@@ -44,9 +45,13 @@ public:
 
 	void setWantSoda(bool wantSoda) { this->wantSoda = wantSoda; }
 
-	bool getSantToUseToilet() { return this->wantToUseToilet; }
+	bool getHaveTicket() { return this->haveTicket; }
 
-	void setSantToUseToilet(bool wantToUseToilet) { this->wantToUseToilet = wantToUseToilet; }
+	void setHaveTicket(bool haveTicket) { this->haveTicket = haveTicket; }
+
+	bool getWantToUseToilet() { return this->wantToUseToilet; }
+
+	void setWantToUseToilet(bool wantToUseToilet) { this->wantToUseToilet = wantToUseToilet; }
 
 	Movie getMovieToWatch() { return this->movieToWatch; }
 

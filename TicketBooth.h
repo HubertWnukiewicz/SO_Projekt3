@@ -1,8 +1,10 @@
 #pragma once
 #include "WorkStation.h"
 #include "Worker.h"
-#include "Viewer.h"
+#include "Boss.h"
 #include <vector>
+
+class Viewer;
 class TicketBooth : WorkStation
 {
 public:
@@ -12,11 +14,11 @@ public:
 		FREE
 	};
 
-	void startTicket(Viewer viewer);
+	void startTicket(Viewer* viewer);
 
-	void stopTicket(Viewer viewer);
+	void stopTicket(Viewer* viewer);
 
-	TicketBooth(Manager* manager, Worker* worker);
+	TicketBooth(int manager_id, int worker1_id, int worker2_id, Boss& boss);
 
 	Manager* getManager() { return this->manager; }
 
@@ -28,8 +30,9 @@ private:
 	Manager* manager;
 	Worker* worker;
 	std::mutex boothMutex;
+	Boss& boss;
 
 	int manager_id;
-	int worker_id1;
-	int worker_id2;
+	int worker1_id;
+	int worker2_id;
 };

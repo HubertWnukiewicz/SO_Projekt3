@@ -3,8 +3,8 @@
 
 void Toilet::startToilet(Viewer *viewer)
 {
-	if (this->visitors.size() + 1 < 4)
-		this->toiletMutex.lock();
+	//if (this->visitors.size() >= 3)
+	//	this->toiletMutex.lock();
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -12,30 +12,34 @@ void Toilet::startToilet(Viewer *viewer)
 		{
 			if (i == 0)
 			{
-				this->cabine0Mutex.lock();
+				 this->cabine0Mutex.lock();
 				viewer->setState(viewer->IN_TOILET);
-				this->visitors.insert(this->visitors.begin() + i, viewer);
+				//this->visitors.insert(this->visitors.begin() + i, viewer);
+				this->visitors[i]=viewer;
 				return;
 			}
 			else if (i == 1)
 			{
-				this->cabine1Mutex.lock();
+				 this->cabine1Mutex.lock();
 				viewer->setState(viewer->IN_TOILET);
-				this->visitors.insert(this->visitors.begin() + i, viewer);
+				//this->visitors.insert(this->visitors.begin() + i, viewer);
+				this->visitors[i]=viewer;
 				return;
 			}
 			else if (i == 2)
 			{
-				this->cabine2Mutex.lock();
+				 this->cabine2Mutex.lock();
 				viewer->setState(viewer->IN_TOILET);
-				this->visitors.insert(this->visitors.begin() + i, viewer);
+				//this->visitors.insert(this->visitors.begin() + i, viewer);
+				this->visitors[i]=viewer;
 				return;
 			}
 			else if (i == 3)
 			{
-				this->cabine3Mutex.lock();
+				 this->cabine3Mutex.lock();
 				viewer->setState(viewer->IN_TOILET);
-				this->visitors.insert(this->visitors.begin() + i, viewer);
+				//this->visitors.insert(this->visitors.begin() + i, viewer);
+				this->visitors[i]=viewer;
 				return;
 			}
 		}
@@ -56,30 +60,34 @@ void Toilet::stopToilet(Viewer *viewer)
 
 			if (i == 0)
 			{
-				this->visitors.erase(this->visitors.begin() + i);
-				this->cabine0Mutex.unlock();
-				this->toiletMutex.unlock();
+				this->visitors[i]=nullptr;
+				//this->visitors.erase(this->visitors.begin()+i);
+				 this->cabine0Mutex.unlock();
+				//this->toiletMutex.unlock();
 				return;
 			}
 			else if (i == 1)
 			{
-				this->visitors.erase(this->visitors.begin() + i);
-				this->cabine1Mutex.unlock();
-				this->toiletMutex.unlock();
+				this->visitors[i]=nullptr;
+				//this->visitors.erase(this->visitors.begin()+i);
+				 this->cabine1Mutex.unlock();
+				//this->toiletMutex.unlock();
 				return;
 			}
 			else if (i == 2)
 			{
-				this->visitors.erase(this->visitors.begin() + i);
-				this->cabine2Mutex.unlock();
-				this->toiletMutex.unlock();
+				this->visitors[i]=nullptr;
+				//this->visitors.erase(this->visitors.begin()+i);
+				 this->cabine2Mutex.unlock();
+				//this->toiletMutex.unlock();
 				return;
 			}
 			else if (i == 3)
 			{
-				this->visitors.erase(this->visitors.begin() + i);
-				this->cabine3Mutex.unlock();
-				this->toiletMutex.unlock();
+				this->visitors[i]=nullptr;
+				//this->visitors.erase(this->visitors.begin()+i);
+				 this->cabine3Mutex.unlock();
+				//this->toiletMutex.unlock();
 				return;
 			}
 		}

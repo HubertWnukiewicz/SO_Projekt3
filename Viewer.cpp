@@ -29,7 +29,7 @@ Viewer::Viewer(int id, bool isAdult, bool wantFood, bool wantSoda, bool wantToUs
 
 void Viewer::cycleOfiLife()
 {
-	//while (true) {
+	while (true) {
 	if (this->wantFood == true)
 	{
 		//cout << "ID: " << this->id << "->WAITING_FOR_FOOD" << endl;
@@ -51,7 +51,7 @@ void Viewer::cycleOfiLife()
 		//cout << "ID: " << this->id << "->WAITING_FOR_TOILET" << endl;
 		this->state = ViewerState::WAITING_FOR_TOILET;
 		toilet->startToilet(this);
-		this_thread::sleep_for(1000ms);
+		this_thread::sleep_for(5000ms);
 		toilet->stopToilet(this);
 	}
 	if (this->haveTicket == false)
@@ -68,7 +68,7 @@ void Viewer::cycleOfiLife()
 		this->readyToWatch = true;
 		this->state = ViewerState::WAITING_FOR_MOVIE;
 	}
-	//}
+	}
 	//ustalenie state na leaving cinema albo po utowrzeniu zmiennej bool dla viewera i zmiana
 	//jej w klasie sali kinowej lub ustawienie state w klasie kinowej bez tworzenia zminnej u widza
 }

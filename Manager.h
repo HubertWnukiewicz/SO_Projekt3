@@ -7,13 +7,11 @@
 #include <functional>
 #include <condition_variable>
 
-
 class WorkStation;
-
 
 class Manager
 {
-	
+
 public:
 	enum ManagerState
 	{
@@ -23,20 +21,22 @@ public:
 		activity4,
 		activity5
 	};
+
 private:
-
-	WorkStation* myWorkStation;
-
 	int id;
-	//std::thread thread;
-	std::chrono::milliseconds activityTime;
+	std::thread thread;
+	//std::chrono::milliseconds activityTime;
 	ManagerState state;
+	WorkStation *currentStation;
+
+	WorkStation *firstStation;
+
+	WorkStation *secondStation;
 
 public:
+	Manager(int id, WorkStation *firstStation, WorkStation *secondStation);
 
-	Manager(int id, WorkStation* workStation);
+	int getId() { return this->id; }
 
-
-
-	void changeWorkStation(WorkStation& myWorkStation);
+	void changeWorkStation(WorkStation *myWorkStation);
 };

@@ -4,22 +4,19 @@
 
 class Manager;
 
-
 class WorkStation
 {
 	int id;
 	std::string name;
-	Manager* manager;
+	Manager *manager;
 	int manager_id;
 	int worker_id1;
 	int worker_id2;
 
-
 public:
 	WorkStation();
 
-	WorkStation(int id, std::string name, Manager* manager);
+	WorkStation(int id, std::string name, Manager *manager);
 
-
-	
+	void executeTask();
 };

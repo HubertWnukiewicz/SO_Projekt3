@@ -1,13 +1,13 @@
 #include "Manager.h"
 
-
-Manager::Manager(int id, WorkStation * workStation)
+Manager::Manager(int id, WorkStation *firstStation, WorkStation *secondStation)
 {
 	this->id = id;
-	this->myWorkStation = workStation;
+	this->firstStation = firstStation;
+	this->secondStation = secondStation;
 }
 
-void Manager::changeWorkStation(WorkStation & myWorkStation)
+void Manager::changeWorkStation(WorkStation *newWorkStation)
 {
-	//notify boss o zmianie stanowiska 
+	this->currentStation = newWorkStation;
 }

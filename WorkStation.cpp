@@ -12,3 +12,7 @@ WorkStation::WorkStation(int id, std::string name, Manager* manager)
 	this->name = name;
 	this->manager = manager;
 }
+void WorkStation::executeTask()
+{
+	
+}

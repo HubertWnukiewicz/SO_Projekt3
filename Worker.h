@@ -7,6 +7,8 @@
 #include <functional>
 #include <condition_variable>
 
+class WorkStation;
+
 class Worker
 {
 public:
@@ -19,12 +21,21 @@ public:
 		activity5
 	};
 
-	Worker(int id);
+	Worker(int id, WorkStation *firstStation, WorkStation *secondStation);
+
+	void changeWorkStation(WorkStation *myWorkStation);
+
+	void cycleOfLife();
+
 private:
 	int id;
-	//std::thread thread;
-	std::chrono::milliseconds activityTime;
-	WorkerState nextState;
+	std::thread thread;
+	//std::chrono::milliseconds activityTime;
+	WorkerState State;
 
+	WorkStation *currentStation;
 
+	WorkStation *firstStation;
+
+	WorkStation *secondStation;
 };

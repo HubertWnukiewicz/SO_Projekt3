@@ -16,16 +16,20 @@ public:
 		FREE
 	};
 
-	void startToilet(Viewer* viewer);
+	void startToilet(Viewer *viewer);
 
-	void stopToilet(Viewer* viewer);
+	void stopToilet(Viewer *viewer);
 
 	Toilet(int maxCapacity);
 
-	std::vector<class Viewer*> visitors;
-private:
+	std::vector<class Viewer *> visitors;
 
+private:
 	ToiletState state;
 	std::mutex toiletMutex;
+	std::mutex cabine0Mutex;
+	std::mutex cabine1Mutex;
+	std::mutex cabine2Mutex;
+	std::mutex cabine3Mutex;
 	int maxCapacity;
 };

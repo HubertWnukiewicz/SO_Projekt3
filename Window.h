@@ -2,6 +2,7 @@
 #define WINDOW_H
 
 #include <iostream>
+
 #include <ncurses.h>
 #include <string.h>
 #include <stdio.h>

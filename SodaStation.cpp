@@ -22,7 +22,7 @@ SodaStation::SodaStation(Manager* manager, Worker* worker)
 
 void SodaStation::startSoda(Viewer* viewer)
 {
-	std::cout << "1. SodaStation" << std::endl;
+	//std::cout << "1. SodaStation" << std::endl;
 	this->sodaMutex.lock();
 	//if (manager != nullptr && worker != nullptr)
 	//zawolanie obiektu klasy Boss jesli nie ma managera o jego przybycie i wydanie sody
@@ -34,14 +34,14 @@ void SodaStation::startSoda(Viewer* viewer)
 	if (worker == nullptr)
 		this->boss.callForManager(this->worker1_id);
 	*/
-	std::cout << "2. SodaStation" << std::endl;
+	//std::cout << "2. SodaStation" << std::endl;
 }
 void SodaStation::stopSoda(Viewer* viewer)
 {
-	std::cout << "3. SodaStation" << std::endl;
+	//std::cout << "3. SodaStation" << std::endl;
 	viewer->setWantSoda(false);
 	this->sodaMutex.unlock();
-	std::cout << "4. SodaStation" << std::endl;
+	//std::cout << "4. SodaStation" << std::endl;
 }
 
 SodaStation::SodaStation(int manager_id, int worker_id, int worker2_id, Boss& boss) :boss(boss)

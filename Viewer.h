@@ -35,11 +35,11 @@ public:
 
 	bool getIsAdult() { return this->isAdult; }
 
-	void setIsAdult(bool isAdult) { this->isAdult=isAdult; }
+	void setIsAdult(bool isAdult) { this->isAdult = isAdult; }
 
 	bool getWantFood() { return this->wantFood; }
 
-	void setWantFood(bool wantFood) { this->wantFood=wantFood; }
+	void setWantFood(bool wantFood) { this->wantFood = wantFood; }
 
 	bool getWantSoda() { return this->wantSoda; }
 
@@ -53,18 +53,22 @@ public:
 
 	void setWantToUseToilet(bool wantToUseToilet) { this->wantToUseToilet = wantToUseToilet; }
 
+	ViewerState getState() { return this->state; }
+
+	void setState(ViewerState state) { this->state = state; }
+
 	Movie getMovieToWatch() { return this->movieToWatch; }
 
-	void setMovieToWatch(Movie movieToWatch) {this->movieToWatch=movieToWatch; }
+	void setMovieToWatch(Movie movieToWatch) { this->movieToWatch = movieToWatch; }
 
 	Viewer(int id, bool isAdult, bool wantFood, bool wantSoda, bool wantToUseToilet, Movie movieToWatch,
-		TicketBooth* ticketBooth, Toilet* toilet, FoodStation* foodStation, SodaStation* sodaStation);
+		   TicketBooth *ticketBooth, Toilet *toilet, FoodStation *foodStation, SodaStation *sodaStation);
 
 	void cycleOfiLife();
 
 	std::thread viewerThread;
-private:
 
+private:
 	int id;
 
 	bool isAdult;
@@ -78,10 +82,8 @@ private:
 	std::chrono::milliseconds activityTime;
 	ViewerState state;
 
-	TicketBooth* ticketBooth;
-	Toilet* toilet;
-	FoodStation* foodStation;
-	SodaStation* sodaStation;
-
-	
+	TicketBooth *ticketBooth;
+	Toilet *toilet;
+	FoodStation *foodStation;
+	SodaStation *sodaStation;
 };

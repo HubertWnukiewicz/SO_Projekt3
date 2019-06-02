@@ -1,27 +1,104 @@
 #include "Toilet.h"
 #include "Viewer.h"
 
-void Toilet::startToilet(Viewer * viewer)
+void Toilet::startToilet(Viewer *viewer)
 {
-//	std::cout << "1. Toilet" << std::endl;
-	this->toiletMutex.lock();
-	visitors.push_back(viewer);
-//	std::cout << "2. Toilet" << std::endl;
+	//if (this->visitors.size() >= 3)
+	//	this->toiletMutex.lock();
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (this->visitors[i] == nullptr)
+		{
+			if (i == 0)
+			{
+				// this->cabine0Mutex.lock();
+				viewer->setState(viewer->IN_TOILET);
+				//this->visitors.insert(this->visitors.begin() + i, viewer);
+				this->visitors[i]=viewer;
+				return;
+			}
+			else if (i == 1)
+			{
+				// this->cabine1Mutex.lock();
+				viewer->setState(viewer->IN_TOILET);
+				//this->visitors.insert(this->visitors.begin() + i, viewer);
+				this->visitors[i]=viewer;
+				return;
+			}
+			else if (i == 2)
+			{
+				// this->cabine2Mutex.lock();
+				viewer->setState(viewer->IN_TOILET);
+				//this->visitors.insert(this->visitors.begin() + i, viewer);
+				this->visitors[i]=viewer;
+				return;
+			}
+			else if (i == 3)
+			{
+				// this->cabine3Mutex.lock();
+				viewer->setState(viewer->IN_TOILET);
+				//this->visitors.insert(this->visitors.begin() + i, viewer);
+				this->visitors[i]=viewer;
+				return;
+			}
+		}
+	}
+
+	//	std::cout << "2. Toilet" << std::endl;
 	//else
 	//add to Queue
 }
 
-void Toilet::stopToilet(Viewer * viewer)
+void Toilet::stopToilet(Viewer *viewer)
 {
-//	std::cout << "3. Toilet" << std::endl;
-	viewer->setWantToUseToilet(false);
-	visitors.pop_back();
-	this->toiletMutex.unlock();
-//	std::cout << "4. Toilet" << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		if (this->visitors[i] == viewer)
+		{
+			viewer->setWantToUseToilet(false);
+
+			if (i == 0)
+			{
+				this->visitors[i]=nullptr;
+				//this->visitors.erase(this->visitors.begin()+i);
+				// this->cabine0Mutex.unlock();
+				//this->toiletMutex.unlock();
+				return;
+			}
+			else if (i == 1)
+			{
+				this->visitors[i]=nullptr;
+				//this->visitors.erase(this->visitors.begin()+i);
+				// this->cabine1Mutex.unlock();
+				//this->toiletMutex.unlock();
+				return;
+			}
+			else if (i == 2)
+			{
+				this->visitors[i]=nullptr;
+				//this->visitors.erase(this->visitors.begin()+i);
+				// this->cabine2Mutex.unlock();
+				//this->toiletMutex.unlock();
+				return;
+			}
+			else if (i == 3)
+			{
+				this->visitors[i]=nullptr;
+				//this->visitors.erase(this->visitors.begin()+i);
+				// this->cabine3Mutex.unlock();
+				//this->toiletMutex.unlock();
+				return;
+			}
+		}
+	}
+	//	std::cout << "3. Toilet" << std::endl;
+	//	std::cout << "4. Toilet" << std::endl;
 }
 
 Toilet::Toilet(int maxCapacity)
 {
 	this->maxCapacity = maxCapacity;
+	visitors.reserve(4);
 	this->state = ToiletState::FREE;
 }

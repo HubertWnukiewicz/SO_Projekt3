@@ -11,11 +11,11 @@ Window::Window()
     Boss boss;
 	//vector<thread> philosopherThreads;
 	TicketBooth* ticketBooth=new TicketBooth(0,1,2,boss);
-	Toilet* toilet=new Toilet(10);
+	Toilet* toilet=new Toilet(4);
 	FoodStation* foodStation=new FoodStation(0, 1, 2, boss);
 	SodaStation* sodaStation=new SodaStation(0, 1, 2, boss);
 	Movie movie(1, "aaa", true);
-	for (int i = 0; i < 40; i++)
+	for (int i = 0; i < 30; i++)
 	{
 		viewerList.push_back(new Viewer(i, false, true, true, true, movie, ticketBooth, toilet, foodStation, sodaStation));
 	}
@@ -176,7 +176,7 @@ void Window::createToilet(WINDOW *win){
     int col=0;
     for(Viewer *el : viewerList)
     {
-       if(el->getState()==3)
+       if(el->getState()==el->IN_TOILET)
         {
            wmove(win,3,2+col*3);
            wattron(win,COLOR_PAIR(2));

@@ -71,7 +71,7 @@ public:
 	void cycleOfiLife();
 
 	std::thread viewerThread;
-
+	
 private:
 	int id;
 
@@ -85,7 +85,6 @@ private:
 	Movie movieToWatch;
 	std::chrono::milliseconds activityTime;
 	ViewerState state;
-
 	TicketBooth *ticketBooth;
 	Toilet *toilet;
 	FoodStation *foodStation;

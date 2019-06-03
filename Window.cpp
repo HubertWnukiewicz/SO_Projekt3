@@ -8,7 +8,7 @@ Window::Window()
     //SALA 2 -WSZYSCY
     //SALA 3 -WSZYSCY
 
-    Boss* boss=new Boss(10,5);
+    this->boss=new Boss(10,5);
     //Boss* boss=new Boss();
     //TicketBooth *ticketBooth = new TicketBooth(0, 1, 2, boss);
     Toilet *toilet = new Toilet(4);
@@ -20,8 +20,8 @@ Window::Window()
     Movie movie(1, "aaa", true);
     for (int i = 0; i < 30; i++)
     {
-        viewerList.push_back(new Viewer(i, false, true, true, true, movie, boss->getTicketBooths()[0] , toilet,boss->getFoodStation(), boss->getSodaStation()));
-        //viewerList.push_back(new Viewer(i, false, true, true, true, movie, ticketBooth , toilet,foodStation, sodaStation));
+        int y = i%4;
+        viewerList.push_back(new Viewer(i, false, true, true, true, movie, boss->getTicketBooths()[y] , toilet,boss->getFoodStation(), boss->getSodaStation()));
     }
     
 
@@ -55,7 +55,7 @@ void Window::drawScene()
     while (true)
     {
         redrawScene();
-        usleep(350000);
+        usleep(150000);
         //std::this_thread::sleep_for(1000ms);
         //clear();
     }
@@ -75,6 +75,7 @@ void Window::redrawScene()
     WINDOW *popcornStation = newwin(5, 9, 40, 140);
     WINDOW *sodaStation = newwin(5, 9, 40, 160);
     WINDOW *waitingRoom = newwin(11, 70, 17, 80);
+    WINDOW *ticketBoothQueue = newwin(10, 109, 30, 60);
     for (int i = 0; i < TICKETOFFICE_STATION_NUMBER; i++)
         ticketOfficeStation[i] = newwin(5, 9, 40, 60 + i * 20);
     ///////////////////////////////////////////////////////////////////
@@ -89,6 +90,7 @@ void Window::redrawScene()
     createTicketOfficeStation(sodaStation, "Napoje");
     createTicketOfficeStation(checkTicketStation, "Sprawdzanie biletow");
     createWaitingRoom(waitingRoom);
+    createTicketBoothQueue(ticketBoothQueue);
     createLegend();
     for (int i = 0; i < TICKETOFFICE_STATION_NUMBER; i++)
     {
@@ -106,6 +108,7 @@ void Window::redrawScene()
     wrefresh(popcornStation);
     wrefresh(sodaStation);
     wrefresh(waitingRoom);
+    wrefresh(ticketBoothQueue);
     wrefresh(checkTicketStation);
     for (int i = 0; i < TICKETOFFICE_STATION_NUMBER; i++)
         wrefresh(ticketOfficeStation[i]);
@@ -245,6 +248,90 @@ void Window::createWaitingRoom(WINDOW *win)
                 row = row + 2;
                 col = 0;
             }
+        }
+    }
+    refresh();
+}
+
+void Window::createTicketBoothQueue(WINDOW *win)
+{
+    for(int i=0; i<6; i++){
+    mvwvline(win, win->_maxy, 2+i*20, 0, 1);
+    mvwvline(win, win->_maxy, 6+i*20, 0, 1);
+    mvwhline(win, win->_maxy-1, 3+i*20, 0, 3);
+    }
+
+    int colTicket=0;
+    int rowTicket=0;
+    int rowFood=0;
+    int rowSoda=0;
+    for (Viewer *el : viewerList)
+    {
+        if (el->getState() == el->BUYING_TICKET)
+         {
+             
+             if(el->getId() % 4 ==0)
+                  wmove(win, win->_maxy, 4);
+              if(el->getId() % 4 ==1)
+                 wmove(win, win->_maxy, 24);
+             if(el->getId() % 4 ==2)
+                 wmove(win, win->_maxy, 44);
+             if(el->getId() % 4 ==3)
+                 wmove(win, win->_maxy, 64);
+
+            wattron(win, COLOR_PAIR(2));
+            wprintw(win, "%d", el->getId());
+            wattroff(win, COLOR_PAIR(2));
+
+        }
+
+        if((el->getState() == el->BUYING_FOOD))
+        {
+            wmove(win, win->_maxy, 84);
+            wattron(win, COLOR_PAIR(2));
+            wprintw(win, "%d", el->getId());
+            wattroff(win, COLOR_PAIR(2));
+        }
+
+         if((el->getState() == el->BUYING_SODA))
+        {
+            wmove(win, win->_maxy, 104);
+            wattron(win, COLOR_PAIR(2));
+            wprintw(win, "%d", el->getId());
+            wattroff(win, COLOR_PAIR(2));
+        }
+
+        if(el->getState() == el->WAITING_FOR_TICKET)
+        {
+            wmove(win, win->_maxy-2-rowTicket, 4+colTicket*20);
+            wattron(win, COLOR_PAIR(2));
+            wprintw(win, "%d", el->getId());
+            wattroff(win, COLOR_PAIR(2));
+            colTicket++;
+
+            if(colTicket>3)
+            {
+                rowTicket++;
+                colTicket=0;
+            }
+        }
+
+        if(el->getState() == el->WAITING_FOR_FOOD)
+        {
+            wmove(win, win->_maxy-2-rowFood, 84);
+            wattron(win, COLOR_PAIR(2));
+            wprintw(win, "%d", el->getId());
+            wattroff(win, COLOR_PAIR(2));
+            rowFood++;
+        }
+
+        if(el->getState() == el->WAITING_FOR_SODA)
+        {
+            wmove(win, win->_maxy-2-rowSoda, 104);
+            wattron(win, COLOR_PAIR(2));
+            wprintw(win, "%d", el->getId());
+            wattroff(win, COLOR_PAIR(2));
+            rowSoda++;
         }
     }
     refresh();

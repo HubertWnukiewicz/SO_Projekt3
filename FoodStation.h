@@ -18,7 +18,7 @@ public:
 	void startFood(Viewer* viewer);
 
 	void stopFood(Viewer* viewer);
-
+	int currentWorker;
 	explicit FoodStation(int manager1_id, int worker1_id, int worker2_id,Boss* boss);// :WorkStation(manager1_id,worker1_id,worker2_id,boss) {}
 /*
 	Manager* getManager() { return this->manager; }

@@ -7,6 +7,7 @@ class CheckTickets;
 class CleanRoom;
 class FoodStation;
 class SodaStation;
+class WorkStation;
 
 class Boss
 {
@@ -20,16 +21,20 @@ class Boss
 	SodaStation* sodaStation;
 	CheckTickets* checkTickets;
 	std::mutex bossMutex;
-	std::condition_variable cv;
+	std::mutex bossMutex2;
+	//std::condition_variable cv;
 
 public:
 	Boss(int numberOfWorkers, int numberOfManagers);
 
 	Boss();
+	void dismissManager(int id,WorkStation* workStation);
 
-	void callForManager(int id);
+	void dismissWorker(int id,WorkStation* workStation);
 
-	void callForWorker(int id1, int id2);
+	Manager* callForManager(int id, WorkStation* workStation);
+
+	Worker* callForWorker(int id1, int id2, WorkStation* workStation);
 
 	int getNumberOfWorkers() { return this->numberOfWorkers; }
 
@@ -48,4 +53,6 @@ public:
 	SodaStation* getSodaStation() {return this->sodaStation;}
 
 	CheckTickets* getCheckTickets() {return this->checkTickets;}
+
+	void start();
 };

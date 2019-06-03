@@ -48,7 +48,79 @@ Boss::Boss()
 	
 }
 
-void Boss::callForManager(int id)
+Manager* Boss::callForManager(int id,WorkStation* workStation)
 {
-
+	this->bossMutex.lock();
+	
+	 for (Manager *el : managers)
+	 {
+		if(el->getId()==id )
+		{
+			el->setState(el->BUSY);
+			el->changeWorkStation(workStation);
+			return el;
+		}
+	 }
+	 return nullptr;
+}
+void Boss::dismissManager(int id,WorkStation* workStation)
+{
+	for (Manager *el : managers)
+	 {
+		if(el->getId()==id )
+		{
+			el->changeWorkStation(nullptr);
+			el->setState(el->FREE);
+			this->bossMutex.unlock();
+		}
+	 }
+}
+void Boss::dismissWorker(int id,WorkStation* workStation)
+{
+	for (Worker *el : workers)
+	 {
+		if(el->getId()==id )
+		{
+			el->releaseCurrentStation();
+			el->setState(el->FREE);
+			this->bossMutex2.unlock();
+		}
+	 }
+}
+Worker* Boss::callForWorker(int id1, int id2,WorkStation* workStation)
+{
+	this->bossMutex2.lock();
+	for (Worker *el : workers)
+	{
+		if(el->getId()==id1 && el->getState()==el->FREE)
+		{
+			el->changeWorkStation(workStation);
+			return el;
+		}
+		if(el->getId()==id1 && el->getState()==el->FREE)
+		{
+			el->changeWorkStation(workStation);
+			return el;
+		}
+	}
+	for (Worker *el : workers)
+	{
+		if(el->getId()==id1 )
+		{
+			el->changeWorkStation(workStation);
+			return el;
+		}
+	}
+	return nullptr;
+}
+void Boss::start()
+{
+	for (Worker *el : workers)
+	{
+		el->workerThread.join();
+	}
+	for (Manager *el : managers)
+	{
+		el->managerThread.join();
+	}
 }

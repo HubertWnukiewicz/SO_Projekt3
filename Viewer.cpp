@@ -29,6 +29,7 @@ Viewer::Viewer(int id, bool isAdult, bool wantFood, bool wantSoda, bool wantToUs
 
 void Viewer::cycleOfiLife()
 {
+	
 	while (true) {
 	this_thread::sleep_for(1000ms);
 	if (this->wantToUseToilet == true)
@@ -36,7 +37,7 @@ void Viewer::cycleOfiLife()
 		//cout << "ID: " << this->id << "->WAITING_FOR_TOILET" << endl;
 		this->state = ViewerState::WAITING_FOR_TOILET;
 		toilet->startToilet(this);
-		this_thread::sleep_for(5000ms);
+		this_thread::sleep_for(1000ms);
 		toilet->stopToilet(this);
 	}
 	if (this->wantFood == true)
@@ -61,7 +62,7 @@ void Viewer::cycleOfiLife()
 		//cout << "ID: " << this->id << "->WAITING_FOR_TICKET" << endl;
 		this->state = ViewerState::WAITING_FOR_TICKET;
 		ticketBooth->startTicket(this);
-		this_thread::sleep_for(1000ms);
+		this_thread::sleep_for(1500ms);
 		ticketBooth->stopTicket(this);
 	}
 	if (this->haveTicket == true && this->wantToUseToilet == false && this->wantSoda == false && this->wantFood == false)

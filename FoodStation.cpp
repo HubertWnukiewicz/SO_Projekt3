@@ -5,7 +5,8 @@ void FoodStation::startFood(Viewer* viewer)
 	//std::cout << "1. FoodStation" << std::endl;
 	//(WorkStation)
 	this->mutex.lock();
-	std::cout<<"aaaaa"<<std::endl;
+	viewer->setState(viewer->BUYING_FOOD);
+	//std::cout<<"aaaaa"<<std::endl;
 	//reinterpret_cast<WorkStation*>(this->mutex.lock());
 	//std::cout << "2. FoodStation" << std::endl;
 	//if (manager != nullptr && worker != nullptr)
@@ -13,20 +14,26 @@ void FoodStation::startFood(Viewer* viewer)
 
 
 	//TO MUSI ZOSTAC
-	/*
+	
 	if (manager == nullptr)
-		this->boss.callForManager(this->manager_id);
+		this-> manager=this->boss->callForManager(this->manager_id,reinterpret_cast<WorkStation*>(this));
 
 	//add random later worker1_id or worker2_id
 	if (worker == nullptr)
-		this->boss.callForManager(this->worker1_id);
-	*/
+		this->worker=this->boss->callForWorker(this->worker1_id,this->worker2_id,reinterpret_cast<WorkStation*>(this));
+
+	
 
 }
 void FoodStation::stopFood(Viewer* viewer)
 {
 	//std::cout << "3. FoodStation" << std::endl;
 	viewer->setWantFood(false);
+	viewer->setState(viewer->WAITING_FOR_MOVIE);
+	this->boss->dismissManager(this->manager_id,reinterpret_cast<WorkStation*>(this));
+	this->boss->dismissWorker(this->worker->getId(),reinterpret_cast<WorkStation*>(this));
+	manager=nullptr;
+	worker=nullptr;
 	this->mutex.unlock();
 	//(WorkStation)this->mutex.unlock();
 	//reinterpret_cast<WorkStation*>(this->mutex.unlock());

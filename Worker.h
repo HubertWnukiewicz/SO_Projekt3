@@ -14,26 +14,33 @@ class Worker
 public:
 	enum WorkerState
 	{
-		NO_MANAGER,
-		NO_WORKER,
-		NO_ONE,
-		BUSY
+		BUSY,
+		FREE
 	};
 
+	std::mutex workerMutex;
 	Worker(int id, WorkStation *firstStation, WorkStation *secondStation);
 
 	void changeWorkStation(WorkStation *myWorkStation);
 
 	void cycleOfLife();
-	void setCurrentStation(WorkStation* workStation);
-	WorkStation* getCurrentStation();
 
+	void setCurrentStation(WorkStation* workStation);
+
+	void releaseCurrentStation();
+
+	WorkStation* getCurrentStation();
+	void setState(WorkerState nState) {this->state=nState;}
+
+	WorkerState getState() {return this->state;}
 	std::thread workerThread;
+
+	int getId() {return this->id;}
 private:
 	int id;
 	
 	//std::chrono::milliseconds activityTime;
-	WorkerState State;
+	WorkerState state;
 
 	WorkStation *currentStation;
 

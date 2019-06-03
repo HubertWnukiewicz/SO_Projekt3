@@ -1,5 +1,5 @@
 #include "Window.h"
-
+#include "Boss.h"
 Window::Window()
 {
 
@@ -8,18 +8,22 @@ Window::Window()
     //SALA 2 -WSZYSCY
     //SALA 3 -WSZYSCY
 
-    Boss boss;
-    //vector<thread> philosopherThreads;
-    std::vector<class WorkStation *> stations;
-    TicketBooth *ticketBooth = new TicketBooth(0, 1, 2, boss);
+    Boss* boss=new Boss(10,5);
+    //Boss* boss=new Boss();
+    //TicketBooth *ticketBooth = new TicketBooth(0, 1, 2, boss);
     Toilet *toilet = new Toilet(4);
-    FoodStation *foodStation = new FoodStation(0, 1, 2, boss);
-    SodaStation *sodaStation = new SodaStation(0, 1, 2, boss);
+    //Toilet *toilet2 = new Toilet(4);
+    //FoodStation *foodStation = new FoodStation(0,1, 2, boss);
+    //SodaStation *sodaStation = new SodaStation(0,1, 2, boss);
+    //int id, bool isAdult, bool wantFood, bool wantSoda, bool wantToUseToilet, Movie movieToWatch, TicketBooth *ticketBooth,
+    // Toilet *toilet, FoodStation *foodStation, SodaStation *sodaStation) : foodStation(foodStation), sodaStation(sodaStation
     Movie movie(1, "aaa", true);
     for (int i = 0; i < 30; i++)
     {
-        viewerList.push_back(new Viewer(i, false, true, true, true, movie, ticketBooth, toilet, foodStation, sodaStation));
+        viewerList.push_back(new Viewer(i, false, true, true, true, movie, boss->getTicketBooths()[0] , toilet,boss->getFoodStation(), boss->getSodaStation()));
+        //viewerList.push_back(new Viewer(i, false, true, true, true, movie, ticketBooth , toilet,foodStation, sodaStation));
     }
+    
 
     initscr();
     start_color();

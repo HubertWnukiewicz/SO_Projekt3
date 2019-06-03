@@ -20,9 +20,10 @@ class ScreeingRoom
 	std::vector<class Viewer*> viewers;
 	ScreeingRoomState state;
 	//Boss& boss
-	int manager_id;
-	int worker_id1;
-	int worker_id2;
+	int manager1_id;
+	int manager2_id;
+	int worker1_id;
+	int worker2_id;
 
 public:
 

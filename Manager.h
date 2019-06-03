@@ -24,7 +24,7 @@ public:
 
 private:
 	int id;
-	std::thread thread;
+	
 	//std::chrono::milliseconds activityTime;
 	ManagerState state;
 	WorkStation *currentStation;
@@ -36,7 +36,11 @@ private:
 public:
 	Manager(int id, WorkStation *firstStation, WorkStation *secondStation);
 
+	std::thread managerThread;
+
 	int getId() { return this->id; }
 
 	void changeWorkStation(WorkStation *myWorkStation);
+
+	void cycleOfLife();
 };

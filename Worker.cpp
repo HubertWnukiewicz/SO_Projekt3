@@ -6,17 +6,26 @@ Worker::Worker(int id, WorkStation *firstStation, WorkStation *secondStation) : 
 	this->firstStation = firstStation;
 	this->secondStation = secondStation;
 	this->currentStation = nullptr;
-	this->thread = std::thread(&Worker::cycleOfLife, this);
+	this->workerThread = std::thread(&Worker::cycleOfLife, this);
 }
 
 void Worker::cycleOfLife()
 {
 	while (true)
 	{
-		this->currentStation->executeTask();
+		this->currentStation->executeTask(this);
 	}
 }
 void Worker::changeWorkStation(WorkStation *myWorkStation)
 {
 	this->currentStation = myWorkStation;
+}
+
+void Worker::setCurrentStation(WorkStation* newWorkStation)
+{
+	this->currentStation=newWorkStation;
+}
+WorkStation* Worker::getCurrentStation()
+{
+	return this->currentStation;
 }

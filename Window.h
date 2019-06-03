@@ -15,7 +15,6 @@
 #include <cstdio>
 #include <atomic>
 #include "Viewer.h"
-#include "Boss.h"
 #include "TicketBooth.h"
 #include "FoodStation.h"
 #include "SodaStation.h"

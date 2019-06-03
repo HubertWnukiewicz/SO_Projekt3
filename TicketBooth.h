@@ -5,7 +5,7 @@
 #include <vector>
 
 class Viewer;
-class TicketBooth : WorkStation
+class TicketBooth : public WorkStation
 {
 public:
 	enum TicketBoothState
@@ -18,21 +18,23 @@ public:
 
 	void stopTicket(Viewer* viewer);
 
-	TicketBooth(int manager_id, int worker1_id, int worker2_id, Boss& boss);
+	TicketBooth(int manager1_id, int worker1_id, int worker2_id, Boss* boss);// :WorkStation(manager1_id,worker1_id,worker2_id,boss) {}
 
-	Manager* getManager() { return this->manager; }
+	//Manager* getManager() { return this->manager; }
 
-	Worker* getWorker() { return this->worker; }
+	//Worker* getWorker() { return this->worker; }
 
 private:
 	int maxPeopleInQueue;
 	std::vector<class Viewer*> viewersInQueue;
-	Manager* manager;
+	/*Manager* manager;
 	Worker* worker;
 	std::mutex boothMutex;
-	Boss& boss;
+	Boss* boss;
 
-	int manager_id;
+	int manager1_id;
+	int manager2_id;
 	int worker1_id;
 	int worker2_id;
+	*/
 };

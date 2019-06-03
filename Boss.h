@@ -3,15 +3,22 @@
 #include <mutex>
 #include <vector>
 #include <condition_variable>
+class CheckTickets;
+class CleanRoom;
+class FoodStation;
+class SodaStation;
+
 class Boss
 {
 	std::vector<class Worker *> workers;
 	std::vector<class Manager *> managers;
-	std::vector<class WorkStation *> stations;
 	int numberOfWorkers;
 	int numberOfManagers;
-	//std::deque<class Worker *> workers;
-	//std::deque<class Manager *> managers
+	std::vector<class CleanRoom*> cleanRooms;
+	std::vector<class TicketBooth *> ticketBooths;
+	FoodStation* foodStation;
+	SodaStation* sodaStation;
+	CheckTickets* checkTickets;
 	std::mutex bossMutex;
 	std::condition_variable cv;
 
@@ -31,4 +38,14 @@ public:
 	std::vector<class Manager *> getManagers() { return this->managers; }
 
 	std::vector<class Worker *> getWorkers() { return this->workers; }
+
+	std::vector<class CleanRoom *> getRoomsToClean() { return this->cleanRooms; }
+
+	std::vector<class TicketBooth *> getTicketBooths() { return this->ticketBooths; }
+
+	FoodStation* getFoodStation() {return this->foodStation;}
+
+	SodaStation* getSodaStation() {return this->sodaStation;}
+
+	CheckTickets* getCheckTickets() {return this->checkTickets;}
 };

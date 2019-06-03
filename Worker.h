@@ -14,11 +14,10 @@ class Worker
 public:
 	enum WorkerState
 	{
-		activity1,
-		activity2,
-		activity3,
-		activity4,
-		activity5
+		NO_MANAGER,
+		NO_WORKER,
+		NO_ONE,
+		BUSY
 	};
 
 	Worker(int id, WorkStation *firstStation, WorkStation *secondStation);
@@ -26,10 +25,13 @@ public:
 	void changeWorkStation(WorkStation *myWorkStation);
 
 	void cycleOfLife();
+	void setCurrentStation(WorkStation* workStation);
+	WorkStation* getCurrentStation();
 
+	std::thread workerThread;
 private:
 	int id;
-	std::thread thread;
+	
 	//std::chrono::milliseconds activityTime;
 	WorkerState State;
 

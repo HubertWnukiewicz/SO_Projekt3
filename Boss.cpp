@@ -51,11 +51,12 @@ Boss::Boss()
 Manager* Boss::callForManager(int id,WorkStation* workStation)
 {
 	this->bossMutex.lock();
-	
+	//std::cout<<"5"<<std::endl;
 	 for (Manager *el : managers)
 	 {
 		if(el->getId()==id )
 		{
+	//		std::cout<<"6"<<std::endl;
 			el->setState(el->BUSY);
 			el->changeWorkStation(workStation);
 			return el;
@@ -69,9 +70,11 @@ void Boss::dismissManager(int id,WorkStation* workStation)
 	 {
 		if(el->getId()==id )
 		{
-			el->changeWorkStation(nullptr);
+	//		std::cout<<"7"<<std::endl;
+			el->releaseWorkStation();
 			el->setState(el->FREE);
 			this->bossMutex.unlock();
+	//		std::cout<<"8"<<std::endl;
 		}
 	 }
 }
@@ -80,25 +83,29 @@ void Boss::dismissWorker(int id,WorkStation* workStation)
 	for (Worker *el : workers)
 	 {
 		if(el->getId()==id )
-		{
+		{//std::cout<<"eeeee"<<std::endl;
 			el->releaseCurrentStation();
 			el->setState(el->FREE);
 			this->bossMutex2.unlock();
+			//std::cout<<"fffff"<<std::endl;
 		}
 	 }
 }
 Worker* Boss::callForWorker(int id1, int id2,WorkStation* workStation)
 {
 	this->bossMutex2.lock();
+	//std::cout<<"aaaa"<<std::endl;
 	for (Worker *el : workers)
 	{
 		if(el->getId()==id1 && el->getState()==el->FREE)
 		{
+	//		std::cout<<"bbbbb"<<std::endl;
 			el->changeWorkStation(workStation);
 			return el;
 		}
 		if(el->getId()==id1 && el->getState()==el->FREE)
 		{
+	//		std::cout<<"cccc"<<std::endl;
 			el->changeWorkStation(workStation);
 			return el;
 		}
@@ -107,6 +114,7 @@ Worker* Boss::callForWorker(int id1, int id2,WorkStation* workStation)
 	{
 		if(el->getId()==id1 )
 		{
+	//		std::cout<<"ddddd"<<std::endl;
 			el->changeWorkStation(workStation);
 			return el;
 		}

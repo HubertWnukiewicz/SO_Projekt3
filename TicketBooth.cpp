@@ -11,14 +11,12 @@ void TicketBooth::startTicket(Viewer* viewer)
 	viewer->setState(viewer->BUYING_TICKET);
 	//std::cout << "2. TicketBooth" << std::endl;
 	//TO MUSI ZOSTAC
-	/*
 	if (manager == nullptr)
-		this->boss.callForManager(this->manager_id);
+		this->manager=this->boss->callForManager(this->manager_id,reinterpret_cast<WorkStation*>(this));
 
 	//add random later worker1_id or worker2_id
 	if (worker == nullptr)
-		this->boss.callForManager(this->worker1_id);
-	*/
+		this->worker=this->boss->callForWorker(this->worker1_id,this->worker2_id,reinterpret_cast<WorkStation*>(this));
 }
 TicketBooth::TicketBooth(int manager1_id, int worker1_id, int worker2_id, Boss* boss) //:WorkStation(manager1_id,worker1_id,worker2_id,boss) {}
 {
@@ -32,6 +30,10 @@ void TicketBooth::stopTicket(Viewer* viewer)
 //	std::cout << "3. TicketBooth" << std::endl;
 	viewer->setHaveTicket(true);
 	viewer->setState(viewer->WAITING_FOR_MOVIE);
+	this->boss->dismissManager(this->manager_id,reinterpret_cast<WorkStation*>(this));
+	this->boss->dismissWorker(this->worker->getId(),reinterpret_cast<WorkStation*>(this));
+	manager=nullptr;
+	worker=nullptr;
 	this->mutex.unlock();
 	//reinterpret_cast<WorkStation*>(this->mutex.unlock());
 	//(WorkStation)this->mutex.unlock();

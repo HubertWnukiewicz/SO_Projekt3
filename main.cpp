@@ -33,6 +33,9 @@ int main()
 	Window *window = new Window();
 	//window->screenThread.join();
 	window->start();
+
+	window->getBoss()->start();
+
 	//cout << "Ilosc elementow: " << viewers.size() << endl;
     //Window window = Window();
    // window.drawScene();

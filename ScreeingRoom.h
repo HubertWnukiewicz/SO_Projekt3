@@ -3,7 +3,7 @@
 #include "Boss.h"
 #include <vector>
 class Movie;
-//class Viewer;
+class Viewer;
 
 class ScreeingRoom
 {
@@ -21,11 +21,14 @@ class ScreeingRoom
 	std::vector<class Viewer*> viewers;
 	ScreeingRoomState state;
 	Boss *boss;
+
 	int manager1_id;
 	int manager2_id;
 	int worker1_id;
 	int worker2_id;
+
 	std::mutex mutex;
+
 
 public:
 

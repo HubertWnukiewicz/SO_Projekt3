@@ -10,6 +10,15 @@ Manager::Manager(int id, WorkStation *firstStation, WorkStation *secondStation)
 }
 
 void Manager::changeWorkStation(WorkStation *newWorkStation)
+{	this->managerMutex.lock();
+	this->currentStation = newWorkStation;
+}
+void Manager::releaseWorkStation()
+{
+	this->currentStation = nullptr;
+	this->managerMutex.unlock();
+
+void Manager::changeWorkStation(WorkStation *newWorkStation)
 {
 	this->currentStation = newWorkStation;
 }

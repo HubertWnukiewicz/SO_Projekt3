@@ -37,12 +37,13 @@ class Window
         void createWaitingRoom(WINDOW *win);
         void createLegend();
         void createTicketBoothQueue(WINDOW *win);
-
+        Boss* getBoss() {return this->boss;}
         virtual ~Window();
 
         std::thread screenThread;
     protected:
     private:
+        Boss* boss;
         std::list<Viewer*> viewerList;
 };
 

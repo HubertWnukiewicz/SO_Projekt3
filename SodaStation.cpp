@@ -30,21 +30,25 @@ void SodaStation::startSoda(Viewer* viewer)
 	viewer->setState(viewer->BUYING_SODA);
 	//if (manager != nullptr && worker != nullptr)
 	//zawolanie obiektu klasy Boss jesli nie ma managera o jego przybycie i wydanie sody
-	/*
-	if (manager == nullptr)
-		this->boss.callForManager(this->manager_id);
+		if (manager == nullptr)
+		this->manager=this->boss->callForManager(this->manager_id,reinterpret_cast<WorkStation*>(this));
 
 	//add random later worker1_id or worker2_id
 	if (worker == nullptr)
 		this->boss.callForManager(this->worker1_id);
 	*/
 	//std::cout << "2. SodaStation" << std::endl;
+		this->worker=this->boss->callForWorker(this->worker1_id,this->worker2_id,reinterpret_cast<WorkStation*>(this));
 }
 void SodaStation::stopSoda(Viewer* viewer)
 {
 	//std::cout << "3. SodaStation" << std::endl;
 	viewer->setWantSoda(false);
 	viewer->setState(viewer->WAITING_FOR_MOVIE);
+	this->boss->dismissManager(this->manager_id,reinterpret_cast<WorkStation*>(this));
+	this->boss->dismissWorker(this->worker->getId(),reinterpret_cast<WorkStation*>(this));
+	manager=nullptr;
+	worker=nullptr;
 	this->mutex.unlock();
 	//reinterpret_cast<WorkStation*>(this->mutex.unlock());
 	//(WorkStation)this->mutex.unlock();

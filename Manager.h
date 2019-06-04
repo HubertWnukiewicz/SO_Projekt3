@@ -15,16 +15,15 @@ class Manager
 public:
 	enum ManagerState
 	{
-		activity1,
-		activity2,
-		activity3,
-		activity4,
-		activity5
+		BUSY,
+		FREE
 	};
 
 private:
 	int id;
-	
+
+	std::mutex managerMutex;
+
 	//std::chrono::milliseconds activityTime;
 	ManagerState state;
 	WorkStation *currentStation;
@@ -43,4 +42,19 @@ public:
 	void changeWorkStation(WorkStation *myWorkStation);
 
 	void cycleOfLife();
+
+	std::thread managerThread;
+
+	int getId() { return this->id; }
+
+	void changeWorkStation(WorkStation *myWorkStation);
+
+	void cycleOfLife();
+
+	void releaseWorkStation();
+
+	void setState(ManagerState nState) {this->state=nState;}
+
+	ManagerState getState() {return this->state;}
+
 };

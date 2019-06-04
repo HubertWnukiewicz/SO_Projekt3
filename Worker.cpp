@@ -17,8 +17,13 @@ void Worker::cycleOfLife()
 	}
 }
 void Worker::changeWorkStation(WorkStation *myWorkStation)
-{
+{	this->workerMutex.lock();
 	this->currentStation = myWorkStation;
+}
+void Worker::releaseCurrentStation()
+{
+	this->currentStation=nullptr;
+	this->workerMutex.unlock();
 }
 
 void Worker::setCurrentStation(WorkStation* newWorkStation)

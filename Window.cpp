@@ -8,7 +8,7 @@ Window::Window()
     //SALA 2 -WSZYSCY
     //SALA 3 -WSZYSCY
 
-    Boss* boss=new Boss(10,5);
+    this->boss=new Boss(10,5);
     //Boss* boss=new Boss();
     //TicketBooth *ticketBooth = new TicketBooth(0, 1, 2, boss);
     Toilet *toilet = new Toilet(4);

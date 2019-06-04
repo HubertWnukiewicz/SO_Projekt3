@@ -1,12 +1,27 @@
 #include "ScreeingRoom.h"
+#include "Viewer.h"
 
-ScreeingRoom::ScreeingRoom(int id, int numberOfSeats, Movie movie)
+ScreeingRoom::ScreeingRoom(int id, int numberOfSeats, Movie* movie, Boss *boss)
 {
 	this->id = id;
 	this->numberOfSeats = numberOfSeats;
 	this->movie = movie;
 	this->currentNumberOfViewers = 0;
+	this->boss=boss;
+}
 
+void ScreeingRoom::startWatchingMovie(Viewer *viewer)
+{
+	this->mutex.lock();
+
+	viewer->setState(viewer->WATCHING_MOVIE);
+	viewer->setReadyToWatch(true);
+}
+
+void ScreeingRoom::stopWatchingMovie(Viewer *viewer)
+{
+	viewer->setState(viewer->LEAVING_CINEMA);
+	this->mutex.unlock();
 }
 
 void ScreeingRoom::startMovie()
@@ -18,9 +33,7 @@ void ScreeingRoom::startMovie()
 	{
 		this->state = ScreeingRoomState::VIEWERS_LEAVING;
 		//this->currentNumberOfViewers-- per 0.01s na przyklad
-	}
-		
-	
+	}		
 }
 
 void ScreeingRoom::callForCleaning()

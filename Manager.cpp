@@ -1,13 +1,22 @@
 #include "Manager.h"
-
-
-Manager::Manager(int id, WorkStation * workStation)
+#include "WorkStation.h"
+Manager::Manager(int id, WorkStation *firstStation, WorkStation *secondStation)
 {
 	this->id = id;
-	this->myWorkStation = workStation;
+	this->firstStation = firstStation;
+	this->secondStation = secondStation;
+	this->currentStation=nullptr;
+	this->managerThread=std::thread(&Manager::cycleOfLife, this);
 }
 
-void Manager::changeWorkStation(WorkStation & myWorkStation)
+void Manager::changeWorkStation(WorkStation *newWorkStation)
 {
-	//notify boss o zmianie stanowiska 
+	this->currentStation = newWorkStation;
+}
+void Manager::cycleOfLife()
+{
+	while(true)
+	{
+		this->currentStation->superviseTask(this);
+	}
 }

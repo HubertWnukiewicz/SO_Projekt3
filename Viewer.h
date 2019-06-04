@@ -6,12 +6,14 @@
 #include <atomic>
 #include <functional>
 #include "Movie.h"
+#include "CheckTickets.h"
 //#include "TicketBooth.h"
 
 class TicketBooth;
 class Toilet;
 class FoodStation;
 class SodaStation;
+class CheckTickets;
 
 class Viewer
 {
@@ -23,8 +25,14 @@ public:
 		WAITING_FOR_SODA,
 		WAITING_FOR_TOILET,
 		WAITING_FOR_TICKET,
+		WAITING_FOR_CHECK_TICKET,
 		IN_TOILET,
 		WATCHING_MOVIE,
+		//IN_MOVIE,
+		BUYING_FOOD,
+		BUYING_SODA,
+		BUYING_TICKET,
+		CHECKING_TICKET,
 		LEAVING_CINEMA
 	};
 	Viewer(const Viewer &);
@@ -53,21 +61,27 @@ public:
 
 	void setWantToUseToilet(bool wantToUseToilet) { this->wantToUseToilet = wantToUseToilet; }
 
+	void setifTicketCheck(bool ifTicketCheck) { this->ifTicketCheck = ifTicketCheck; }
+
+	bool getifTicketCheck() { return this->ifTicketCheck; }
+
 	ViewerState getState() { return this->state; }
+
+	void setReadyToWatch(bool readyToWatch) { this->readyToWatch=readyToWatch; }
 
 	void setState(ViewerState state) { this->state = state; }
 
-	Movie getMovieToWatch() { return this->movieToWatch; }
+	Movie *getMovieToWatch() { return this->movieToWatch; }
 
-	void setMovieToWatch(Movie movieToWatch) { this->movieToWatch = movieToWatch; }
+	void setMovieToWatch(Movie* movieToWatch) { this->movieToWatch = movieToWatch; }
 
-	Viewer(int id, bool isAdult, bool wantFood, bool wantSoda, bool wantToUseToilet, Movie movieToWatch,
-		   TicketBooth *ticketBooth, Toilet *toilet, FoodStation *foodStation, SodaStation *sodaStation);
+	Viewer(int id, bool isAdult, bool wantFood, bool wantSoda, bool wantToUseToilet ,Movie* movieToWatch,
+		   TicketBooth *ticketBooth, Toilet *toilet, FoodStation *foodStation, SodaStation *sodaStation, CheckTickets *checkTicket);
 
 	void cycleOfiLife();
 
 	std::thread viewerThread;
-
+	
 private:
 	int id;
 
@@ -77,13 +91,14 @@ private:
 	bool wantToUseToilet;
 	bool haveTicket;
 	bool readyToWatch;
+	bool ifTicketCheck;
 
-	Movie movieToWatch;
+	Movie *movieToWatch;
 	std::chrono::milliseconds activityTime;
 	ViewerState state;
-
 	TicketBooth *ticketBooth;
 	Toilet *toilet;
 	FoodStation *foodStation;
 	SodaStation *sodaStation;
+	CheckTickets *checkTicket;
 };

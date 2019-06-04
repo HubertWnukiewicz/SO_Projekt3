@@ -5,7 +5,7 @@
 //#include "Viewer.h"
 class Viewer;
 
-class SodaStation : WorkStation
+class SodaStation : public WorkStation
 {
 public:
 	enum SodaStationState
@@ -17,19 +17,17 @@ public:
 
 	void stopSoda(Viewer* viewer);
 
-	SodaStation(int manager_id, int worker1_id, int worker2_id, Boss& boss);
-	Manager* getManager() { return this->manager; }
+	 explicit  SodaStation(int manager1_id, int worker1_id, int worker2_id, Boss* boss);// :WorkStation(manager1_id,worker1_id,worker2_id,boss) {}
 
-	Worker* getWorker() { return this->worker; }
 
-private:
-	Manager* manager;
+
+	/*Manager* manager;
 	Worker* worker;
 	std::mutex sodaMutex;
 
-	int manager_id;
+	int manager1_id;
 	int worker1_id;
 	int worker2_id;
-	Boss& boss;
+	Boss* boss;*/
 
 };

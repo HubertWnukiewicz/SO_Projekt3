@@ -15,7 +15,6 @@
 #include <cstdio>
 #include <atomic>
 #include "Viewer.h"
-#include "Boss.h"
 #include "TicketBooth.h"
 #include "FoodStation.h"
 #include "SodaStation.h"
@@ -37,6 +36,7 @@ class Window
         void createTicketOfficeStation(WINDOW *win,std::string stationName);
         void createWaitingRoom(WINDOW *win);
         void createLegend();
+        void createTicketBoothQueue(WINDOW *win);
 
         virtual ~Window();
 

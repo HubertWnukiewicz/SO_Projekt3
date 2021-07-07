@@ -25,6 +25,7 @@ void Worker::releaseCurrentStation()
 	this->currentStation=nullptr;
 	this->workerMutex.unlock();
 }
+
 void Worker::setCurrentStation(WorkStation* newWorkStation)
 {
 	this->currentStation=newWorkStation;

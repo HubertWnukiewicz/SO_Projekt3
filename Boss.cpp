@@ -7,6 +7,8 @@
 #include "TicketBooth.h"
 #include "FoodStation.h"
 #include "WorkStation.h"
+#include "ScreeingRoom.h"
+
 Boss::Boss(int numberOfWorkers, int numberOfManagers) //: stations(stations)
 {
 	//std::deque<class Worker *>;
@@ -22,7 +24,12 @@ Boss::Boss(int numberOfWorkers, int numberOfManagers) //: stations(stations)
 	this->ticketBooths.push_back(new TicketBooth(1,1,5,this));
 	this->ticketBooths.push_back(new TicketBooth(2,2,6,this));
 	this->ticketBooths.push_back(new TicketBooth(3,3,7,this));
-
+	this->movies.push_back(new Movie(0,"Cygan w wielkim miescie",false));
+	this->movies.push_back(new Movie(1,"Cygan i spolka",true));
+	this->movies.push_back(new Movie(2,"Hubert Cygan23 Wnukiewicz - Prawdziwa historia",false));
+	this->screenigRooms.push_back(new ScreeingRoom(0,10,this->movies.at(0),this));
+	this->screenigRooms.push_back(new ScreeingRoom(1,10,this->movies.at(1),this));
+	this->screenigRooms.push_back(new ScreeingRoom(2,10,this->movies.at(2),this));
 
 //(int id, WorkStation *firstStation, WorkStation *secondStation)
 	workers.push_back(new Worker(0, reinterpret_cast<WorkStation*>(ticketBooths[0]) ,reinterpret_cast<WorkStation*>(foodStation))); //0

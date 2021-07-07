@@ -18,6 +18,9 @@ void Manager::releaseWorkStation()
 	this->currentStation = nullptr;
 	this->managerMutex.unlock();
 
+void Manager::changeWorkStation(WorkStation *newWorkStation)
+{
+	this->currentStation = newWorkStation;
 }
 void Manager::cycleOfLife()
 {

@@ -35,6 +35,9 @@ void SodaStation::startSoda(Viewer* viewer)
 
 	//add random later worker1_id or worker2_id
 	if (worker == nullptr)
+		this->boss.callForManager(this->worker1_id);
+	*/
+	//std::cout << "2. SodaStation" << std::endl;
 		this->worker=this->boss->callForWorker(this->worker1_id,this->worker2_id,reinterpret_cast<WorkStation*>(this));
 }
 void SodaStation::stopSoda(Viewer* viewer)

@@ -19,6 +19,7 @@ public:
 	};
 
 	std::mutex workerMutex;
+
 	Worker(int id, WorkStation *firstStation, WorkStation *secondStation);
 
 	void changeWorkStation(WorkStation *myWorkStation);
@@ -30,16 +31,18 @@ public:
 	void releaseCurrentStation();
 
 	WorkStation* getCurrentStation();
-	void setState(WorkerState nState) {this->state=nState;}
+	void setState(WorkerState nState) { this->state = nState; }
 
-	WorkerState getState() {return this->state;}
+	WorkerState getState() { return this->state; }
 	std::thread workerThread;
 
-	int getId() {return this->id;}
+	int getId() { return this->id; }
+
 private:
 	int id;
-	
+
 	//std::chrono::milliseconds activityTime;
+
 	WorkerState state;
 
 	WorkStation *currentStation;

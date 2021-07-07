@@ -21,7 +21,9 @@ public:
 
 private:
 	int id;
+
 	std::mutex managerMutex;
+
 	//std::chrono::milliseconds activityTime;
 	ManagerState state;
 	WorkStation *currentStation;
@@ -41,9 +43,18 @@ public:
 
 	void cycleOfLife();
 
+	std::thread managerThread;
+
+	int getId() { return this->id; }
+
+	void changeWorkStation(WorkStation *myWorkStation);
+
+	void cycleOfLife();
+
 	void releaseWorkStation();
 
 	void setState(ManagerState nState) {this->state=nState;}
 
 	ManagerState getState() {return this->state;}
+
 };

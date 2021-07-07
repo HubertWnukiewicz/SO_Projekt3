@@ -17,11 +17,11 @@ Window::Window()
     //SodaStation *sodaStation = new SodaStation(0,1, 2, boss);
     //int id, bool isAdult, bool wantFood, bool wantSoda, bool wantToUseToilet, Movie movieToWatch, TicketBooth *ticketBooth,
     // Toilet *toilet, FoodStation *foodStation, SodaStation *sodaStation) : foodStation(foodStation), sodaStation(sodaStation
-    Movie movie(1, "aaa", true);
+    //Movie movie(1, "aaa", true);
     for (int i = 0; i < 30; i++)
     {
         int y = i%4;
-        viewerList.push_back(new Viewer(i, false, true, true, true, movie, boss->getTicketBooths()[y] , toilet,boss->getFoodStation(), boss->getSodaStation()));
+        viewerList.push_back(new Viewer(i, false, true, true, true,boss->getMovies()[0], boss->getTicketBooths()[y] , toilet,boss->getFoodStation(), boss->getSodaStation(),boss->getCheckTickets()));
     }
     
 
@@ -158,7 +158,7 @@ void Window::createScreeningRoom(WINDOW *win)
     int col = 0;
     for (Viewer *el : viewerList)
     {
-        if (el->getState() == 6)
+        if (el->getState() == el->WATCHING_MOVIE)
         {
             wmove(win, 3 + row, 2 + col * 3);
             wattron(win, COLOR_PAIR(2));
@@ -235,7 +235,7 @@ void Window::createWaitingRoom(WINDOW *win)
     int col = 0;
     for (Viewer *el : viewerList)
     {
-        if (el->getState() == 0)
+        if (el->getState() == el->WAITING_FOR_MOVIE)
         {
             wmove(win, 3 + row, 2 + col * 3);
             wattron(win, COLOR_PAIR(2));

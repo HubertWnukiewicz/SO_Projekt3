@@ -3,8 +3,8 @@
 
 void Toilet::startToilet(Viewer *viewer)
 {
-	//if (this->visitors.size() >= 3)
-	//	this->toiletMutex.lock();
+	if (this->visitors.size() >= 3)
+		this->toiletMutex.lock();
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -12,7 +12,7 @@ void Toilet::startToilet(Viewer *viewer)
 		{
 			if (i == 0)
 			{
-				 this->cabine0Mutex.lock();
+				this->cabine0Mutex.lock();
 				viewer->setState(viewer->IN_TOILET);
 				//this->visitors.insert(this->visitors.begin() + i, viewer);
 				this->visitors[i]=viewer;
@@ -20,7 +20,7 @@ void Toilet::startToilet(Viewer *viewer)
 			}
 			else if (i == 1)
 			{
-				 this->cabine1Mutex.lock();
+				this->cabine1Mutex.lock();
 				viewer->setState(viewer->IN_TOILET);
 				//this->visitors.insert(this->visitors.begin() + i, viewer);
 				this->visitors[i]=viewer;
@@ -28,7 +28,7 @@ void Toilet::startToilet(Viewer *viewer)
 			}
 			else if (i == 2)
 			{
-				 this->cabine2Mutex.lock();
+				this->cabine2Mutex.lock();
 				viewer->setState(viewer->IN_TOILET);
 				//this->visitors.insert(this->visitors.begin() + i, viewer);
 				this->visitors[i]=viewer;
@@ -36,7 +36,7 @@ void Toilet::startToilet(Viewer *viewer)
 			}
 			else if (i == 3)
 			{
-				 this->cabine3Mutex.lock();
+				this->cabine3Mutex.lock();
 				viewer->setState(viewer->IN_TOILET);
 				//this->visitors.insert(this->visitors.begin() + i, viewer);
 				this->visitors[i]=viewer;
@@ -62,8 +62,8 @@ void Toilet::stopToilet(Viewer *viewer)
 			{
 				this->visitors[i]=nullptr;
 				//this->visitors.erase(this->visitors.begin()+i);
-				 this->cabine0Mutex.unlock();
-				//this->toiletMutex.unlock();
+				this->cabine0Mutex.unlock();
+				this->toiletMutex.unlock();
 				return;
 			}
 			else if (i == 1)
@@ -71,23 +71,23 @@ void Toilet::stopToilet(Viewer *viewer)
 				this->visitors[i]=nullptr;
 				//this->visitors.erase(this->visitors.begin()+i);
 				 this->cabine1Mutex.unlock();
-				//this->toiletMutex.unlock();
+				this->toiletMutex.unlock();
 				return;
 			}
 			else if (i == 2)
 			{
 				this->visitors[i]=nullptr;
 				//this->visitors.erase(this->visitors.begin()+i);
-				 this->cabine2Mutex.unlock();
-				//this->toiletMutex.unlock();
+				this->cabine2Mutex.unlock();
+				this->toiletMutex.unlock();
 				return;
 			}
 			else if (i == 3)
 			{
 				this->visitors[i]=nullptr;
 				//this->visitors.erase(this->visitors.begin()+i);
-				 this->cabine3Mutex.unlock();
-				//this->toiletMutex.unlock();
+				this->cabine3Mutex.unlock();
+				this->toiletMutex.unlock();
 				return;
 			}
 		}
@@ -100,5 +100,9 @@ Toilet::Toilet(int maxCapacity)
 {
 	this->maxCapacity = maxCapacity;
 	visitors.reserve(4);
+	this->visitors[0]=nullptr;
+	this->visitors[1]=nullptr;
+	this->visitors[2]=nullptr;
+	this->visitors[3]=nullptr;
 	this->state = ToiletState::FREE;
 }
